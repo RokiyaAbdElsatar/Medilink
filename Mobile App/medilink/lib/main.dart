@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medilink/views/Doctor%20Mode/onboarding1.dart';
-import 'package:medilink/views/Pharmacies.dart';
 
-import 'views/Hospitals.dart' show Hospitals;
+import 'views/Pharmacies.dart' show Pharmacies;
 
 void main() {
   runApp(const MedilinkApp());
@@ -16,7 +14,7 @@ class MedilinkApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Medilink',
 
-      home:Pharmacies(),
+      home: Pharmacies(),
     );
   }
 }

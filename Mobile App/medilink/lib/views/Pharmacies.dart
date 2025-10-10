@@ -13,32 +13,32 @@ int _selectedIndex = 0;
       {
         'name': 'Misr Pharmacies',
         'branches': '200+ Branches',
-        'image': 'images/download (1).png',
+        'image': 'image/download (1).png',
       },
       {
         'name': 'El-Ezaby Pharmacy',
         'branches': '330+ Branches',
-        'image': 'images/download (2).png',
+        'image': 'image/download (2).png',
       },
       {
         'name': 'Dawaee Pharmacies',
         'branches': '50+ Branches',
-        'image': 'images/download.png',
+        'image': 'image/download.png',
       },
       {
         'name': 'Ali & Ali Pharmacy',
         'branches': '40+ Branches',
-        'image': 'images/images (1).png',
+        'image': 'image/images (1).png',
       },
       {
         'name': 'Ali & Ali Pharmacy',
         'branches': '40+ Branches',
-        'image': 'images/images.jpeg',
+        'image': 'image/images.jpeg',
       },
       {
         'name': 'Ali & Ali Pharmacy',
         'branches': '40+ Branches',
-        'image': 'images/images.png',
+        'image': 'image/images.png',
       },
     ];
 

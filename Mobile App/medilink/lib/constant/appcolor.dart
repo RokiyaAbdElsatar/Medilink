@@ -6,6 +6,8 @@ class AppColor {
   static const textPrimary = 0xFF262626;
   static const textSecondary = 0xFFFFFDFD;
   static const textHint = 0xFF8C7D7D;
+  static const grey = 0xFF9D9D9D;
+  static const border = 0xFFD8DADC;
 
   static const doneChoose = 0xFF00CCA0;
 

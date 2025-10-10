@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/constant/appcolor.dart';
-
-import '../widget/textfield.dart' show Textfield;
+import 'widget/textfield.dart' show Textfield;
 
 class PatientPersonal extends StatefulWidget {
   const PatientPersonal({super.key});
