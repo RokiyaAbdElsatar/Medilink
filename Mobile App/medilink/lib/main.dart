@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medilink/views/Doctor%20Mode/onboarding1.dart';
+import 'package:medilink/features/Doctor%20Mode/screens/onboarding.dart';
+import 'package:medilink/features/Shared/Screens/login_screen.dart';
 
 void main() {
   runApp(const MedilinkApp());
@@ -13,7 +14,10 @@ class MedilinkApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Medilink',
 
-      home: const Onboarding1(),
+      home: const OnboardingScreen(),
+      routes: {
+        '/login': (context) => LoginScreen(),
+      },
     );
   }
 }
