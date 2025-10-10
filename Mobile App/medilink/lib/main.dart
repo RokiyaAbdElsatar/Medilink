@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medilink/login_screen.dart';
 import 'package:medilink/views/chat_screen.dart';
 import 'package:medilink/views/onboarding.dart';
 
@@ -13,10 +14,11 @@ class MedilinkApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Medilink',
-
       home: const OnboardingScreen(),
       routes: {
- '/chat': (context) => const ChatScreen(),      },
+ '/login': (context) => const LoginScreen(),   
+ '/chat': (context) => const ChatScreen(),
+      },
     );
   }
 }
