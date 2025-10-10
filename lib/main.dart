@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medilink/views/Doctor%20Mode/doc_working_hours.dart';
+import 'package:medilink/views/splash_screen.dart';
 
 void main() {
   runApp(const MedilinkApp());
@@ -13,7 +13,7 @@ class MedilinkApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Medilink',
 
-      home: DocWorkingHours(),
+      home: SplashScreen(),
     );
   }
 }

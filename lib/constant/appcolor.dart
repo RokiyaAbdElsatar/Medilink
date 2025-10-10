@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class AppColor {
+  static const backGroundColor = 0xFFEBF4FF;
+
   static const primary = 0xFF20A0D8;
   static const background = 0xFFEBF4FF;
   static const textPrimary = 0xFF262626;
