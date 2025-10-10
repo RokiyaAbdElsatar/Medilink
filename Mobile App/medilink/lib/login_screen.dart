@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/constant/appcolor.dart';
+import 'package:medilink/views/chat_screen.dart';
 import 'package:medilink/widgets/custom_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 110,
                       height: 110,
                       child: Image.asset(
-                        'assets/logo.png',
+                        'assets/images/logo.png',
                         fit: BoxFit.contain,
                         cacheWidth: 300,
                       ),
@@ -144,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    MaterialPageRoute(builder: (context) => ChatScreen()),
                   );
                 },
               ),
@@ -176,11 +177,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildSocialButton('assets/facebook.png'),
+                      _buildSocialButton('assets/images/facebook.png'),
                       SizedBox(width: 8),
-                      _buildSocialButton('assets/google.png'),
+                      _buildSocialButton('assets/images/google.png'),
                       SizedBox(width: 8),
-                      _buildSocialButton('assets/apple.png'),
+                      _buildSocialButton('assets/images/apple.png'),
                     ],
                   ),
                 ],

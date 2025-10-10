@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medilink/login_screen.dart';
 import 'package:medilink/views/chat_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -62,10 +63,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 20),
-                    Image.asset(
-                      onboardingData[index]['image']!,
-                      height: 250,
-                    ),
+                    Image.asset(onboardingData[index]['image']!, height: 250),
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -113,7 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (_currentPage == onboardingData.length - 1) {
-    Navigator.pushReplacementNamed(context, '/chat');
+                        Navigator.pushReplacementNamed(context, '/login');
                       } else {
                         _pageController.nextPage(
                           duration: const Duration(milliseconds: 400),
@@ -131,7 +129,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: TextButton(
                       onPressed: () {
                         if (_currentPage == onboardingData.length - 1) {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
+                          );
                         } else {
                           _pageController.nextPage(
                             duration: const Duration(milliseconds: 400),
@@ -143,14 +146,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         _currentPage == onboardingData.length - 1
                             ? "Get Started"
                             : "Next",
-                        style: const TextStyle(fontSize: 16, color: Colors.white),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
                   TextButton(
                     onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/chat');
-
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                     child: const Text(
                       "Skip",
