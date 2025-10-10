@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medilink/views/Doctor%20Mode/onboarding1.dart';
+import 'package:medilink/views/chat_screen.dart';
+import 'package:medilink/views/onboarding.dart';
 
 void main() {
   runApp(const MedilinkApp());
@@ -13,7 +14,9 @@ class MedilinkApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Medilink',
 
-      home: const Onboarding1(),
+      home: const OnboardingScreen(),
+      routes: {
+ '/chat': (context) => const ChatScreen(),      },
     );
   }
 }
