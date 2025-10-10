@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'widget/textfield.dart' show Textfield;
+import '../widget/textfield.dart' show Textfield;
 
-
-class PatientMedical extends StatefulWidget {
-  const PatientMedical({super.key});
+class DoctorPersonal extends StatefulWidget {
+  const DoctorPersonal({super.key});
 
   @override
-  State<PatientMedical> createState() => _PatientMedical();  
+  State<DoctorPersonal> createState() => _DoctorPersonal();  
 }
-GlobalKey<FormState> formkey=GlobalKey();
 
-class _PatientMedical extends State<PatientMedical> {
+GlobalKey<FormState> formkey=GlobalKey();
+class _DoctorPersonal extends State<DoctorPersonal> {
+
   @override
   Widget build(BuildContext context) {
-    var selectedBloodType;
     return Scaffold(
       body:  Container(
               padding: const EdgeInsets.all(20),
@@ -31,7 +30,7 @@ class _PatientMedical extends State<PatientMedical> {
                       children: [
                         const CircleAvatar(
                           radius: 50,
-                          backgroundImage: AssetImage("images/2.jpg"), 
+                          backgroundImage: AssetImage("images/1.png"), 
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -49,7 +48,7 @@ class _PatientMedical extends State<PatientMedical> {
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      "Patient",
+                      "Doctor",
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -68,45 +67,33 @@ class _PatientMedical extends State<PatientMedical> {
                     ),
                     child: Column(
                       children: [
-                        Text('Medical information',textAlign:TextAlign.start,
+                        Text('Personal information',textAlign:TextAlign.start,
                         style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.blue),),
                         SizedBox(height: 10,),
                         Textfield(
-                          labletitle: "Hight",
-                            hinttitle: "Enter Your Hight",
+                          labletitle: "Name",
+                            hinttitle: "Enter Your Name",
                         ),
                          SizedBox(height: 20),
-                         Textfield(
-                          labletitle: "Weight",
-                            hinttitle: "Enter Your Weight",
+                        Textfield(
+                         labletitle: "Age",
+                            hinttitle: "Enter Your Age",
                         ),
                         SizedBox(height: 20),
-                 DropdownButtonFormField<String>(
-                        decoration: const InputDecoration(
-                      labelText: "Blood Type",
-                        border: OutlineInputBorder(),
-                     ),
-                      value: selectedBloodType,
-                     items: [
-                                  "A+",
-                                  "A-",
-                                  "B+",
-                                  "B-",
-                                  "AB+",
-                                  "AB-",
-                                   "O+",
-                                   "O-",
-                              ].map((blood) {
-                    return DropdownMenuItem(
-                      value: blood,
-                           child: Text(blood),
-                           );
-                       }).toList(),
-                            onChanged: (value) {
-                    selectedBloodType = value;
-                                 },
-                          ),
-                
+                        Textfield(
+                          labletitle: "Gender",
+                            hinttitle: "Select Your Gender",
+                        ),
+                        SizedBox(height: 20),
+                        Textfield(
+                          labletitle: "Phone",
+                            hinttitle: "Enter Your Phone Number",
+                        ),
+                        SizedBox(height: 20),
+                        Textfield(
+                          labletitle: "Address",
+                            hinttitle: "Enter Your Full Address",
+                        ),
                         SizedBox(height: 20),
                         TextFormField(
                           decoration: InputDecoration(
@@ -114,14 +101,14 @@ class _PatientMedical extends State<PatientMedical> {
                             fontWeight: FontWeight.bold
                             ),
                             hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                            labelText: "Chronic Condition ",
+                            labelText: "Email",
                             hintText: "Enter Your Email",
                             border: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                             ),
                           ),
-                           validator: (value) {
+                          validator: (value) {
                          if (value == null || value.isEmpty) {
                              return "Please enter your email";
                              }
@@ -130,16 +117,15 @@ class _PatientMedical extends State<PatientMedical> {
                         }
                            return null;
                          },
-                        ),
-                        SizedBox(height: 20),
+                        ), SizedBox(height: 20),
                         TextFormField(
                           decoration: InputDecoration(
                             labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
                             fontWeight: FontWeight.bold
                             ),
                             hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                            labelText: "Allergies",
-                            hintText: "At Least 6 Character",
+                            labelText: "Password",
+                            hintText: "Enter Your Password",
                             border: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
@@ -162,8 +148,8 @@ class _PatientMedical extends State<PatientMedical> {
                             fontWeight: FontWeight.bold
                             ),
                             hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                            labelText: "Medical History Summary",
-                            hintText: "Confirm Your Password",
+                            labelText: "Confirm Password",
+                            hintText: "Enter Your Password agin",
                             border: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
@@ -180,21 +166,12 @@ class _PatientMedical extends State<PatientMedical> {
                          },
                         ),
                         SizedBox(height: 20),
-                         Textfield(
-                          labletitle: "Your Primary Doctor",
-                            hinttitle: "Enter Your Doctor Name",
-                        ),
-                        SizedBox(height: 20),
-                         Textfield(
-                          labletitle: "Doctor Phone",
-                            hinttitle: "Enter Your Doctor Phone",
-                        ),
                         SizedBox( 
                            width: 350,
                           height: 45,  
                      child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF20A0D8),
+                backgroundColor: const Color.fromARGB(255, 6, 120, 250),
                             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(17),
                             ),
