@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widget/textfield.dart' show Textfield;
+
 class DoctorPerfessional extends StatefulWidget {
   const DoctorPerfessional({super.key});
 
@@ -64,124 +66,48 @@ class _DoctorPerfessionalState extends State<DoctorPerfessional> {
                       Text('Perfessional Information',textAlign:TextAlign.start,
                       style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.blue),),
                       SizedBox(height: 10,),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                          fontWeight: FontWeight.bold
-                          ),
-                          hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                          labelText: "Medical Speciaty",
-                          hintText: "EG.Cardiologist Dermatologist",
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
+                      Textfield(
+                       labletitle: "Medical Speciaty",
+                          hinttitle: "EG.Cardiologist Dermatologist",
                       ),
                        SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                          fontWeight: FontWeight.bold
-                          ),
-                          hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                          labelText: "Medical License",
-                          hintText: "Enter Your Medical License Number ",
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
+                      Textfield(
+                        labletitle: "Medical License",
+                          hinttitle: "Enter Your Medical License Number ",
                       ),
                       SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                          fontWeight: FontWeight.bold
-                          ),
-                          hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                          labelText: "issuing Authority",
-                          hintText: "EG. Medical Syndicate",
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
+                      Textfield(
+                        labletitle:"issuing Authority",
+                          hinttitle: "EG. Medical Syndicate",
                       ),
                       SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                          fontWeight: FontWeight.bold
-                          ),
-                          hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                          labelText: "License Expiry Date",
-                          hintText: "Enter The License Expiration date",
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
+                      Textfield(
+                       labletitle: "License Issue Date",
+                          hinttitle: "Enter The License isuue date", 
                       ),
                       SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                          fontWeight: FontWeight.bold
-                          ),
-                          hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                          labelText: "Licensing Authority",
-                          hintText: "Enter the Licensing Authority",
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
+                      Textfield(
+                       labletitle: "License Expir Date",
+                          hinttitle: "Enter The License Expir date", 
                       ),
                       SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                          fontWeight: FontWeight.bold
-                          ),
-                          hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                          labelText: "Years of Experiance",
-                          hintText: "Enter Your Experiance",
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
+                      Textfield(
+                        labletitle:"Licensing Authority",
+                          hinttitle: "Enter the Licensing Authority",
+                      ),
+                      SizedBox(height: 20),
+                      Textfield(
+                       labletitle: "Years of Experiance",
+                          hinttitle: "Enter Your Experiance",
                       ), SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                          fontWeight: FontWeight.bold
-                          ),
-                          hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                          labelText: "Current Workplace",
-                          hintText: "Enter Your Work Hospital Name",
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
+                      Textfield(
+                        labletitle: "Current Workplace",
+                          hinttitle: "Enter Your Work Hospital Name",
                       ),
                       SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                          fontWeight: FontWeight.bold
-                          ),
-                          hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                          labelText: "Upload Medical ID",
-                          hintText: "Accepted Formats : jpg , png , pdf - Max size: 5 MB",
-                          suffixIcon: Icon(Icons.upload),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
+                      Textfield(
+                        labletitle: "Upload Medical ID",
+                          hinttitle: "Accepted Formats : jpg , png , pdf - Max size: 5 MB",
                       ),
                       SizedBox(height: 20),
                       SizedBox( 
