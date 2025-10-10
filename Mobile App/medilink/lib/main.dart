@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medilink/features/Doctor%20Mode/screens/onboarding.dart';
-import 'package:medilink/features/Shared/Screens/login_screen.dart';
+import 'package:medilink/views/chat_screen.dart';
+import 'package:medilink/views/onboarding.dart';
 
 void main() {
   runApp(const MedilinkApp());
@@ -16,8 +16,7 @@ class MedilinkApp extends StatelessWidget {
 
       home: const OnboardingScreen(),
       routes: {
-        '/login': (context) => LoginScreen(),
-      },
+ '/chat': (context) => const ChatScreen(),      },
     );
   }
 }
