@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'views/Nearby.dart' show NearbyScreen;
 import 'views/Pharmacies.dart' show Pharmacies;
 
 void main() {
@@ -14,7 +15,7 @@ class MedilinkApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Medilink',
 
-      home: Pharmacies(),
+      home: NearbyScreen(),
     );
   }
 }
