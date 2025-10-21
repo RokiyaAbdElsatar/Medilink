@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
-import 'views/Pharmacies.dart' show Pharmacies;
+import 'package:flutter/material.dart';
+import 'package:medilink/screens/login_screen.dart';
+import 'package:medilink/screens/medications_screen.dart';
+import 'package:medilink/screens/medication_detail_screen.dart';
 
 void main() {
   runApp(const MedilinkApp());
@@ -14,7 +17,7 @@ class MedilinkApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Medilink',
 
-      home: Pharmacies(),
+      home: MedicationsScreen(),
     );
   }
 }

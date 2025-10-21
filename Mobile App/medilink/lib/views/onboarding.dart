@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medilink/login_screen.dart';
+import 'package:medilink/screens/login_screen.dart';
 import 'package:medilink/views/chat_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
