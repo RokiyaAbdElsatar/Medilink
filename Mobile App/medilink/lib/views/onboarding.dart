@@ -17,17 +17,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       "title": "Track Your Medications",
       "subtitle": "Never miss a dose with our smart reminder system",
-      "image": "assets/images/onboarding1.png",
+      "image": "assets/images/trice.png",
     },
     {
-      "title": "Consult with Doctors",
-      "subtitle": "Connect easily with your healthcare provider anytime",
-      "image": "assets/images/onboarding2.png",
+      "title": "Never Get Lost in Emergencies",
+      "subtitle": "Discover nearby hospitals and clinics with our interactive map",
+      "image": "assets/images/hospital 1.png",
     },
     {
-      "title": "Manage Your Health",
-      "subtitle": "Keep all your health data organized in one place",
-      "image": "assets/images/onboarding3.png",
+      "title": "Chat with Your AI Health Assistant",
+      "subtitle": "Discover nearby hospitals and clinics with our interactive map ",
+      "image": "assets/images/chatBot.png",
     },
   ];
 
