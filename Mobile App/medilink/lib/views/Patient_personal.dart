@@ -1,225 +1,154 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/constant/appcolor.dart';
-import 'widget/textfield.dart' show Textfield;
+import 'package:medilink/views/Pharmacies.dart';
+import 'package:medilink/views/home_screen.dart';
+import 'package:medilink/widgets/textfield.dart';
 
 class PatientPersonal extends StatefulWidget {
   const PatientPersonal({super.key});
 
   @override
-  State<PatientPersonal> createState() => _PatientPersonal();  
+  State<PatientPersonal> createState() => _PatientPersonal();
 }
-GlobalKey<FormState> formkey=GlobalKey();
+
+GlobalKey<FormState> formkey = GlobalKey();
+
 class _PatientPersonal extends State<PatientPersonal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  Container(
-              padding: const EdgeInsets.all(20),
+      backgroundColor: const Color(0xFF20A0D8), // اللون الأزرق العلوي
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 60),
+            const Text(
+              "Sign Up",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // الفورم الأبيض
+            Container(
               width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 196, 238, 232),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
               ),
               child: Form(
                 key: formkey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        const CircleAvatar(
-                          radius: 50,
-                          backgroundImage: AssetImage("images/2.jpg"), 
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 248, 248, 248),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                            
-                            },
-                            icon: const Icon(Icons.camera_alt, color: Color.fromARGB(255, 3, 3, 3)),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
                     const Text(
-                      "Patient",
+                      'Personal Information',
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 114, 181, 236),
+                        color: Color(0xFF20A0D8),
                       ),
                     ),
-                    SizedBox(height: 20,),
-                     Expanded(
-                child: SingleChildScrollView(
-                  padding:EdgeInsets.all(5),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white, 
-                      borderRadius: BorderRadius.circular(17),
+                    const SizedBox(height: 20),
+                    Textfield(labletitle: "Name", hinttitle: "Enter Your Name"),
+                    const SizedBox(height: 15),
+                    Textfield(labletitle: "Age", hinttitle: "Enter Your Age"),
+                    const SizedBox(height: 15),
+                    Textfield(
+                      labletitle: "Gender",
+                      hinttitle: "Select Your Gender",
                     ),
-                    child: Form(
-                      child: Column(
-                        children: [
-                          Text('Personal information',textAlign:TextAlign.start,
-                          style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.blue),),
-                          SizedBox(height: 10,),
-                          Textfield(
-                             labletitle: "Name",
-                              hinttitle: "Enter Your Name",
-                          ),
-                           SizedBox(height: 20),
-                           Textfield(
-                             labletitle: "Age",
-                              hinttitle: "Enter Your Age",
-                          ),
-                          SizedBox(height: 20),
-                          Textfield(
-                             labletitle: "Gender",
-                              hinttitle: "Select Your Gender",
-                          ),
-                          SizedBox(height: 20),
-                          Textfield(
-                             labletitle: "Phone",
-                              hinttitle: "Enter Your Phone Number",
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                              fontWeight: FontWeight.bold
-                              ),
-                              hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                              labelText: "Email",
-                              hintText: "Enter Your Email",
-                              border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.blue),
-                              ),
-                            ),
-                            validator: (value) {
-                           if (value == null || value.isEmpty) {
-                               return "Please enter your email";
-                               }
-                           if (!value.contains('@')) {
-                           return "Email must contain @";
-                          }
-                             return null;
-                           },
-                      
-                          ), SizedBox(height: 20),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                              fontWeight: FontWeight.bold
-                              ),
-                              hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                              labelText: "Password",
-                              hintText: "Enter Your Password",
-                              border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.blue),
-                              ),
-                            ),
-                             validator: (value) {
-                           if (value == null || value.isEmpty) {
-                               return "Please enter your Password";
-                               }
-                           if (value.length<6) {
-                           return "Password not less < 6";
-                          }
-                             return null;
-                           },
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelStyle: TextStyle(color: const Color.fromARGB(255, 53, 183, 235),
-                              fontWeight: FontWeight.bold
-                              ),
-                              hintStyle: TextStyle(color: const Color.fromARGB(255, 136, 131, 131)),
-                              labelText: "Confirm Password",
-                              hintText: "Enter Your Password agin",
-                              border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.blue),
-                              ),
-                            ),
-                            validator: (value) {
-                           if (value == null || value.isEmpty) {
-                               return "Please enter your Password";
-                               }
-                           if (value.length<6) {
-                           return "Password not less < 6";
-                          }
-                             return null;
-                           },
-                            
-                          ),
-                          SizedBox(height: 20),
-                          Text("Emergency Contact Info",style: TextStyle(color: const Color.fromARGB(255, 49, 121, 255),
-                              fontWeight: FontWeight.bold,)),
-                               SizedBox(height: 20),
-                              Textfield(
-                             labletitle: "Name",
-                              hinttitle: "Enter Contact Name",
-                          ),
-                           SizedBox(height: 20),
-                              Textfield(
-                             labletitle: "Relationship",
-                              hinttitle: "Eg:Mum",
-                          ),SizedBox(height: 20),
-                              Textfield(
-                             labletitle: "Phone Number",
-                              hinttitle: "Enter Contact Phone",
-                          ),
-                          SizedBox(height: 20),
-                          SizedBox( 
-                             width: 350,
-                            height: 45,  
-                       child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color.fromARGB(255, 6, 120, 250),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(17),
-                                  ),
-                                ),
-                                onPressed: () { },
-                                child: Text('Continue' ,style: TextStyle(color: Color(0xFF20A0D8),
-                       fontWeight: FontWeight.bold,fontSize: 20
-                                      ),),
-                                    ),
-                                ),
-                          SizedBox(height: 20),
-                          SizedBox( 
-                             width: 350,
-                            height: 45,  
-                       child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                    backgroundColor:Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(17),
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: Text('Back' ,style: TextStyle(color:Colors.blue,
-                       fontWeight: FontWeight.bold,fontSize: 20
-                                      ),),
-                                    ),
-                                ),
-                        ]
-                        ),
+                    const SizedBox(height: 15),
+                    Textfield(
+                      labletitle: "Phone",
+                      hinttitle: "Enter Your Phone",
                     ),
-                    )
-                 ) )
-                          ],
+                    const SizedBox(height: 15),
+                    Textfield(
+                      labletitle: "Address",
+                      hinttitle: "Enter Your Full Address",
+                    ),
+                    const SizedBox(height: 15),
+                    Textfield(
+                      labletitle: "Email",
+                      hinttitle: "Enter Your Email",
+                    ),
+                    const SizedBox(height: 15),
+                    Textfield(
+                      labletitle: "Password",
+                      hinttitle: "At Least 6 Character",
+                    ),
+                    const SizedBox(height: 15),
+                    Textfield(
+                      labletitle: "Confirm Password",
+                      hinttitle: "Re-enter Your Password",
+                    ),
+                    const SizedBox(height: 25),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 45,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF20A0D8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Continue',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 45,
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Color(0xFF20A0D8)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          'Back',
+                          style: TextStyle(
+                            color: Color(0xFF20A0D8),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+            ),
+          ],
+        ),
       ),
     );
   }

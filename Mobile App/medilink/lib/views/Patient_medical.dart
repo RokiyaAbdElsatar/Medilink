@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widget/textfield.dart' show Textfield;
+import '../widgets/textfield.dart' show Textfield;
 
 
 class PatientMedical extends StatefulWidget {

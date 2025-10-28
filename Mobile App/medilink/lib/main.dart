@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:medilink/views/login_screen.dart';
+import 'package:medilink/views/chat_screen.dart';
+import 'package:medilink/views/splash_screen.dart';
 
-import 'views/Pharmacies.dart' show Pharmacies;
 
 void main() {
   runApp(const MedilinkApp());
@@ -14,7 +16,11 @@ class MedilinkApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Medilink',
 
-      home: Pharmacies(),
+      home: SplashScreen(),
+            routes: {
+ '/login': (context) => const LoginScreen(),   
+ '/chat': (context) => const ChatScreen(),
+      },
     );
   }
 }

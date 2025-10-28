@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/constant/appcolor.dart';
+import 'package:medilink/views/Patient_personal.dart';
+import 'package:medilink/views/Pharmacies.dart';
 import 'package:medilink/views/chat_screen.dart';
+import 'package:medilink/views/home_screen.dart';
 import 'package:medilink/widgets/custom_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -135,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Text(
                     "Forgot Password?",
-                    style: TextStyle(color: Color(AppColor.grey)),
+                    style: TextStyle(color: Color(AppColor.grey)),  
                   ),
                 ),
               ),
@@ -145,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ChatScreen()),
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
                   );
                 },
               ),
@@ -199,7 +202,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PatientPersonal(),
+                        ),
+                      );
+                    },
                     child: Text(
                       "Sign Up",
                       style: TextStyle(
