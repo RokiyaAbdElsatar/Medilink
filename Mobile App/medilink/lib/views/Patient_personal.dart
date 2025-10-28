@@ -98,9 +98,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       doctorNameController: doctorNameController,
                       doctorPhoneController: doctorPhoneController,
                       onBack: prevStep,
-                      onSignUp: () {
-                        // TODO: Handle sign-up logic
-                      },
+                 
                       onContinue: () {
                         Navigator.push(
                           context,

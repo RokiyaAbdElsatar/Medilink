@@ -27,7 +27,6 @@ class MedicalInformationStep extends StatelessWidget {
     required this.doctorPhoneController,
     required this.onContinue,
     required this.onBack,
-    required Null Function() onSignUp,
   });
 
   @override
