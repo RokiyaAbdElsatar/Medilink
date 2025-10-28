@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Details.dart' show Details;
+
 class NearbyScreen extends StatefulWidget {
   const NearbyScreen({super.key});
 
@@ -95,7 +97,6 @@ class _NearbyScreenState extends State<NearbyScreen> {
             ),
             const SizedBox(height: 12),
 
-            // 🟦 أزرار الفلترة
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -196,64 +197,72 @@ SizedBox(height: 15,),
                 itemBuilder: (context, index) {
                   final item = filteredItems[index];
                   final isNetworkImage =
-                      item['image']!.startsWith('http'); // للتحقق من نوع الصورة
+                      item['image']!.startsWith('http'); 
 
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: const Color(0xFFBFE4F1),
-                        width: 2,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.15),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => Details(item: item),
+                       ),
+                     );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: const Color(0xFFBFE4F1),
+                          width: 2,
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Center(
-                              child: isNetworkImage
-                                  ? Image.network(item['image']!,
-                                      fit: BoxFit.contain)
-                                  : Image.asset(item['image']!,
-                                      fit: BoxFit.contain),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.15),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Center(
+                                child: isNetworkImage
+                                    ? Image.network(item['image']!,
+                                        fit: BoxFit.contain)
+                                    : Image.asset(item['image']!,
+                                        fit: BoxFit.contain),
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            children: [
-                              Text(
-                                item['name']!,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            child: Column(
+                              children: [
+                                Text(
+                                  item['name']!,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                item['branches'] ?? '',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black54,
+                                const SizedBox(height: 4),
+                                Text(
+                                  item['branches'] ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black54,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -265,7 +274,7 @@ SizedBox(height: 15,),
     );
   }
 
-  // 🟢 Widget للفلاتر
+  
   Widget buildFilterButton(String label) {
     final bool isSelected = selectedCategory == label;
 
