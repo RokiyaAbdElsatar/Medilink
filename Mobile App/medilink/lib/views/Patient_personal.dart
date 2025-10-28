@@ -1,27 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:medilink/constant/appcolor.dart';
-import 'package:medilink/views/Pharmacies.dart';
 import 'package:medilink/views/home_screen.dart';
-import 'package:medilink/widgets/textfield.dart';
+import 'package:medilink/widgets/progress_bar.dart';
+import 'package:medilink/widgets/signup_step_one.dart';
+import 'package:medilink/widgets/signup_step_two.dart';
 
-class PatientPersonal extends StatefulWidget {
-  const PatientPersonal({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<PatientPersonal> createState() => _PatientPersonal();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-GlobalKey<FormState> formkey = GlobalKey();
+class _SignUpPageState extends State<SignUpPage> {
+  int currentStep = 0;
 
-class _PatientPersonal extends State<PatientPersonal> {
+  // Controllers
+  final nameController = TextEditingController();
+  final ageController = TextEditingController();
+  final genderController = TextEditingController();
+  final phoneController = TextEditingController();
+  final addressController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final emergencyNameController = TextEditingController();
+  final relationshipController = TextEditingController();
+  final emergencyPhoneController = TextEditingController();
+  final heightController = TextEditingController();
+  final weightController = TextEditingController();
+  final bloodTypeController = TextEditingController();
+  final chronicController = TextEditingController();
+  final allergiesController = TextEditingController();
+  final medicationsController = TextEditingController();
+  final historyController = TextEditingController();
+  final doctorNameController = TextEditingController();
+  final doctorPhoneController = TextEditingController();
+
+  void nextStep() => setState(() => currentStep++);
+  void prevStep() => setState(() => currentStep--);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF20A0D8), // اللون الأزرق العلوي
-      body: SingleChildScrollView(
+      backgroundColor: const Color(0xff00AEEF),
+      body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 60),
+            const SizedBox(height: 20),
             const Text(
               "Sign Up",
               style: TextStyle(
@@ -32,116 +57,56 @@ class _PatientPersonal extends State<PatientPersonal> {
             ),
             const SizedBox(height: 20),
 
-            // الفورم الأبيض
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
+            // Progress Bar
+            ProgressBar(currentStep: currentStep),
+            const SizedBox(height: 20),
+
+            // Steps Container
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
                 ),
-              ),
-              child: Form(
-                key: formkey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: IndexedStack(
+                  index: currentStep,
                   children: [
-                    const Text(
-                      'Personal Information',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF20A0D8),
-                      ),
+                    SignUpStepOne(
+                      nameController: nameController,
+                      ageController: ageController,
+                      genderController: genderController,
+                      phoneController: phoneController,
+                      addressController: addressController,
+                      onContinue: nextStep,
+                      emailController: emailController,
+                      passwordController: passwordController,
+                      confirmPasswordController: confirmPasswordController,
+                      emergencyNameController: emergencyNameController,
+                      relationshipController: relationshipController,
+                      emergencyPhoneController: emergencyPhoneController,
+                      onBack: () {},
                     ),
-                    const SizedBox(height: 20),
-                    Textfield(labletitle: "Name", hinttitle: "Enter Your Name"),
-                    const SizedBox(height: 15),
-                    Textfield(labletitle: "Age", hinttitle: "Enter Your Age"),
-                    const SizedBox(height: 15),
-                    Textfield(
-                      labletitle: "Gender",
-                      hinttitle: "Select Your Gender",
-                    ),
-                    const SizedBox(height: 15),
-                    Textfield(
-                      labletitle: "Phone",
-                      hinttitle: "Enter Your Phone",
-                    ),
-                    const SizedBox(height: 15),
-                    Textfield(
-                      labletitle: "Address",
-                      hinttitle: "Enter Your Full Address",
-                    ),
-                    const SizedBox(height: 15),
-                    Textfield(
-                      labletitle: "Email",
-                      hinttitle: "Enter Your Email",
-                    ),
-                    const SizedBox(height: 15),
-                    Textfield(
-                      labletitle: "Password",
-                      hinttitle: "At Least 6 Character",
-                    ),
-                    const SizedBox(height: 15),
-                    Textfield(
-                      labletitle: "Confirm Password",
-                      hinttitle: "Re-enter Your Password",
-                    ),
-                    const SizedBox(height: 25),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 45,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF20A0D8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreen(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Continue',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 45,
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Color(0xFF20A0D8)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text(
-                          'Back',
-                          style: TextStyle(
-                            color: Color(0xFF20A0D8),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                    MedicalInformationStep(
+                      heightController: heightController,
+                      weightController: weightController,
+                      bloodTypeController: bloodTypeController,
+                      chronicController: chronicController,
+                      allergiesController: allergiesController,
+                      medicationsController: medicationsController,
+                      historyController: historyController,
+                      doctorNameController: doctorNameController,
+                      doctorPhoneController: doctorPhoneController,
+                      onBack: prevStep,
+                      onSignUp: () {
+                        // TODO: Handle sign-up logic
+                      },
+                      onContinue: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                        );
+                      },
                     ),
                   ],
                 ),

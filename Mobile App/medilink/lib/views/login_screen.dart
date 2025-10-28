@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/constant/appcolor.dart';
 import 'package:medilink/views/Patient_personal.dart';
-import 'package:medilink/views/Pharmacies.dart';
-import 'package:medilink/views/chat_screen.dart';
+
 import 'package:medilink/views/home_screen.dart';
 import 'package:medilink/widgets/custom_button.dart';
 
@@ -206,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PatientPersonal(),
+                          builder: (context) => const SignUpPage(),
                         ),
                       );
                     },
