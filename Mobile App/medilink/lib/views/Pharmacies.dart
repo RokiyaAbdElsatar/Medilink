@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'Hospitals.dart' show Hospitals;
 
 class Pharmacies extends StatefulWidget {
-  const Pharmacies({super.key});
+   Pharmacies({super.key});
+  
 
   @override
   State<Pharmacies> createState() => _PharmaciesState();
@@ -41,18 +42,19 @@ int _selectedIndex = 0;
         'image': 'image/images.png',
       },
     ];
+     String selectedSort = "distance";
 
 class _PharmaciesState extends State<Pharmacies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.list),
+        leading: Icon(Icons.arrow_back,color: Colors.blue,),
         title: Text("Pharmacies",style: TextStyle(
           color: Color(0xFF20A0D8),fontSize: 21,fontWeight: FontWeight.bold
         ),
         ),
-        centerTitle: true,
+        centerTitle: false,
       ),
      body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -76,6 +78,7 @@ class _PharmaciesState extends State<Pharmacies> {
                 ),
                         ),
             ),
+
             SizedBox(height: 12,),
                             Expanded(
               child: SingleChildScrollView(
@@ -214,7 +217,7 @@ class _PharmaciesState extends State<Pharmacies> {
           BottomNavigationBarItem(
             icon: Icon(Icons.local_hospital),
             activeIcon: Icon(Icons.medical_services),
-            label: 'Hospitals',
+            label: 'Nearby',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
