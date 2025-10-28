@@ -152,7 +152,7 @@ class _HospitalsState extends State<Hospitals> {
         ],
        ),
      ) ,
-     bottomNavigationBar: Container( 
+    bottomNavigationBar: Container( 
   height: 70, 
   decoration: const BoxDecoration(
     color: Colors.white,
