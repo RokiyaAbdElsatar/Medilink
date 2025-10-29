@@ -6,6 +6,8 @@ class AppColor {
   static const textPrimary = 0xFF262626;
   static const textSecondary = 0xFFFFFDFD;
   static const textHint = 0xFF8C7D7D;
+  static const medicationColor = 0xFF106B96;
+  static const red = 0xFFEB4335;
 
   static const doneChoose = 0xFF00CCA0;
 

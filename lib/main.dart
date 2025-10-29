@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medilink/firebase_options.dart';
 import 'package:medilink/views/login_screen.dart';
 import 'package:medilink/views/chat_screen.dart';
+import 'package:medilink/views/medication_screen.dart';
 import 'package:medilink/views/navigation_screen.dart';
-import 'package:medilink/views/splash_screen.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,11 +25,14 @@ class MedilinkApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Medilink',
 
-        home: NavigationScreen(),
+        //home: NavigationScreen(),
+        home: MedicationScreen(),
+        /*SplashScreen(),
+>>>>>>> Stashed changes
         routes: {
           '/login': (context) => const LoginScreen(),
           '/chat': (context) => const ChatScreen(),
-        },
+        },*/
       ),
     );
   }
