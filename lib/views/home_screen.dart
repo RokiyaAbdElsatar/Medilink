@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/core/constant/appcolor.dart';
-import 'package:medilink/views/Hospitals.dart';
 import 'package:medilink/views/Pharmacies.dart';
-import 'package:medilink/views/chat_screen.dart';
 import 'package:medilink/views/drawer%20screen.dart';
 import 'package:medilink/views/notification_screen.dart';
 import 'package:medilink/views/pharmacy_container.dart';
@@ -13,8 +11,6 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
-int _selectedIndex = 0;
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<String> urls = [
@@ -276,137 +272,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(height: height * 0.06),
-            ],
-          ),
-        ),
-      ),
-
-      bottomNavigationBar: Container(
-        height: 70,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 10,
-              spreadRadius: 2,
-              offset: Offset(0, -2),
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
-          ),
-          child: BottomNavigationBar(
-            currentIndex: _selectedIndex,
-            onTap: (index) async {
-              setState(() {
-                _selectedIndex = index;
-              });
-
-              // --- Navigation Logic ---
-              if (index == 0) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
-              } else if (index == 1) {
-                // Already on Hospitals Page
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Hospitals()),
-                );
-              } else if (index == 2) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ChatScreen()),
-                );
-              } else if (index == 3) {
-                // Medicines page (add your widget here)
-              } else if (index == 4) {
-                // Profile page (add your widget here)
-              }
-            },
-
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
-            selectedItemColor: const Color(0xFF2B7EA1),
-            unselectedItemColor: Colors.grey,
-            showSelectedLabels: true,
-            showUnselectedLabels: true,
-            elevation: 10,
-            items: [
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/images/Home.png',
-                  width: 24,
-                  height: 24,
-                ),
-                activeIcon: Image.asset(
-                  'assets/images/Home active.png',
-                  width: 24,
-                  height: 24,
-                ),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/images/hospital.png',
-                  width: 24,
-                  height: 24,
-                ),
-                activeIcon: Image.asset(
-                  'assets/images/activeHospital.png',
-                  width: 24,
-                  height: 24,
-                ),
-                label: 'Hospitals',
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/images/Chat.png',
-                  width: 24,
-                  height: 24,
-                ),
-                activeIcon: Image.asset(
-                  'assets/images/active chat.png',
-                  width: 24,
-                  height: 24,
-                ),
-                label: 'Ai Chat',
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/images/medicine.png',
-                  width: 24,
-                  height: 24,
-                ),
-                activeIcon: Image.asset(
-                  'assets/images/activeMedicine.png',
-                  width: 24,
-                  height: 24,
-                ),
-                label: 'Medicines',
-              ),
-              BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/images/profile.png',
-                  width: 24,
-                  height: 24,
-                ),
-                activeIcon: Image.asset(
-                  'assets/images/active profile.png',
-                  width: 24,
-                  height: 24,
-                ),
-                label: 'Profile',
-              ),
             ],
           ),
         ),

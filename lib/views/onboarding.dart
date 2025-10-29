@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/views/login_screen.dart';
-import 'package:medilink/views/chat_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -21,12 +20,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
     {
       "title": "Never Get Lost in Emergencies",
-      "subtitle": "Discover nearby hospitals and clinics with our interactive map",
+      "subtitle":
+          "Discover nearby hospitals and clinics with our interactive map",
       "image": "assets/images/hospital 1.png",
     },
     {
       "title": "Chat with Your AI Health Assistant",
-      "subtitle": "Discover nearby hospitals and clinics with our interactive map ",
+      "subtitle":
+          "Discover nearby hospitals and clinics with our interactive map ",
       "image": "assets/images/chatBot.png",
     },
   ];

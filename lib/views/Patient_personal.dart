@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/services/auth_services.dart';
-import 'package:medilink/views/home_screen.dart';
 import 'package:medilink/views/login_screen.dart';
 import 'package:medilink/widgets/progress_bar.dart';
 import 'package:medilink/widgets/signup_step_one.dart';

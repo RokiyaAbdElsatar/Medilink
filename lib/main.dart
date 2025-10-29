@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:medilink/firebase_options.dart';
 import 'package:medilink/views/login_screen.dart';
 import 'package:medilink/views/chat_screen.dart';
+import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/views/splash_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,7 +25,7 @@ class MedilinkApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Medilink',
 
-        home: SplashScreen(),
+        home: NavigationScreen(),
         routes: {
           '/login': (context) => const LoginScreen(),
           '/chat': (context) => const ChatScreen(),

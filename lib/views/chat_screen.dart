@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medilink/core/constant/appcolor.dart';
+import 'package:medilink/views/navigation_screen.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -76,7 +77,10 @@ class _ChatScreenState extends State<ChatScreen> {
         leadingWidth: 30,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_sharp, color: Color(AppColor.primary)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => NavigationScreen()),
+          ),
         ),
         title: Row(
           children: [
