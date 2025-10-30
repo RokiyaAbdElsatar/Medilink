@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/views/Patient_personal.dart';
 import 'package:medilink/views/home_screen.dart';
+import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/widgets/custom_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -52,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // ✅ Navigate to HomeScreen on success
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => NavigationScreen()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

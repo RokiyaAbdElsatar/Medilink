@@ -6,6 +6,7 @@ import 'package:medilink/views/login_screen.dart';
 import 'package:medilink/views/chat_screen.dart';
 import 'package:medilink/views/medication_screen.dart';
 import 'package:medilink/views/navigation_screen.dart';
+import 'package:medilink/views/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,13 +27,12 @@ class MedilinkApp extends StatelessWidget {
         title: 'Medilink',
 
         //home: NavigationScreen(),
-        home: MedicationScreen(),
-        /*SplashScreen(),
->>>>>>> Stashed changes
+        home: SplashScreen(),
         routes: {
           '/login': (context) => const LoginScreen(),
           '/chat': (context) => const ChatScreen(),
-        },*/
+        },
+  
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:medilink/views/home_screen.dart';
 import 'package:medilink/views/Hospitals.dart';
 import 'package:medilink/views/chat_screen.dart';
 import 'package:medilink/views/Pharmacies.dart'; // or Medicines screen if separate
+import 'package:medilink/views/medication_screen.dart';
 import 'package:medilink/views/profile_screen.dart'; // you'll create this if not yet done
 
 class NavigationScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     HomeScreen(),
     Hospitals(),
     ChatScreen(),
-    Pharmacies(), // replace with your MedicinesScreen() when ready
+    MedicationScreen(), // replace with your MedicinesScreen() when ready
     ProfileScreen(), // placeholder for now
   ];
 

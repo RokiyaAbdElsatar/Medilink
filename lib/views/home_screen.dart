@@ -276,6 +276,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: "emergency_btn",
+        shape: CircleBorder(),
+        backgroundColor: Color(0xFF106B96),
+        onPressed: () {},
+        child: Image(image: AssetImage("assets/images/Vector1.png")),
+      ),
     );
   }
 }
+
