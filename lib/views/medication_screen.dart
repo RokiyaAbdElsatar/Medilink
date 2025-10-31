@@ -5,6 +5,7 @@ import 'package:medilink/models/medication_model.dart';
 import 'package:medilink/services/medication_services.dart';
 import 'package:medilink/views/add_edit_medication_screen.dart';
 import 'package:medilink/views/medication_details_screen.dart';
+import 'package:medilink/views/notification_screen.dart';
 import 'package:medilink/widgets/custom_app_bar.dart';
 import 'package:medilink/widgets/medicine_card.dart';
 
@@ -26,10 +27,18 @@ class _MedicationScreenState extends State<MedicationScreen> {
       builder: (context, child) {
         return Scaffold(
           appBar: CustomAppBar(
+            backBtn: false,
             title: 'Medications',
             subtitle: 'Manage your medications',
             icon: Icons.notifications_outlined,
-            onPressed: () {},
+            onPressed: () {
+                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NotificationScreen(),
+                                  ),
+                                );
+            },
             shape: BoxShape.circle,
           ),
           backgroundColor: const Color(AppColor.textSecondary),

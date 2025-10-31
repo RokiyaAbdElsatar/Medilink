@@ -8,6 +8,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final IconData icon;
   final VoidCallback onPressed;
   final BoxShape shape;
+  final bool backBtn;
 
   const CustomAppBar({
     super.key,
@@ -16,16 +17,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.icon,
     required this.onPressed,
     required this.shape,
+    this.backBtn = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-
     return PreferredSize(
       preferredSize: Size.fromHeight(180.h),
       child: Stack(
         children: [
+          // ✅ الخلفية
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -34,31 +35,34 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
+
+          // ✅ المحتوى
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: SafeArea(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Back button
-                  Container(
-                    height: 40.h,
-                    width: 40.h,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(8.r),
+                  // ✅ زر الرجوع (اختياري)
+                  if (backBtn)
+                    Container(
+                      height: 40.h,
+                      width: 40.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        iconSize: 24.sp,
+                        icon: const Icon(Icons.arrow_back, color: Colors.black),
+                        onPressed: () => Navigator.pop(context),
+                      ),
                     ),
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      iconSize: 24.sp,
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ),
 
-                  SizedBox(width: 12.w),
+                  if (backBtn) SizedBox(width: 12.w),
 
-                  // Title & subtitle — wrapped to avoid overflow
+                  // ✅ العنوان والعنوان الفرعي
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +75,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                             title,
                             style: TextStyle(
                               color: const Color(AppColor.medicationColor),
-                              fontSize: 30.sp, // responsive
+                              fontSize: 30.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -90,7 +94,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
                   SizedBox(width: 8.w),
 
-                  // Action icon
+                  // ✅ أيقونة الإجراء
                   Container(
                     height: 40.h,
                     width: 40.h,
