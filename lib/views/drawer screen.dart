@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:medilink/views/login_screen.dart';
 import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/views/profile_screen.dart';
 
@@ -121,13 +122,13 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
           const SizedBox(height: 225),
           ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('Log Out'),
-            onTap: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.pushNamedAndRemoveUntil(
+            leading: Icon(Icons.logout),
+            title: Text('Log Out'),
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushAndRemoveUntil(
                 context,
-                '/login',
+                MaterialPageRoute(builder: (context) => LoginScreen()),
                 (route) => false,
               );
             },
