@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/views/Patient_personal.dart';
-import 'package:medilink/views/home_screen.dart';
 import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/widgets/custom_button.dart';
 

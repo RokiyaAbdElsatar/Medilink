@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medilink/views/login_screen.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({super.key});
@@ -69,10 +71,11 @@ class DrawerScreen extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('Log Out'),
-            onTap: () {
-              Navigator.pushNamedAndRemoveUntil(
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushAndRemoveUntil(
                 context,
-                '/login',
+                MaterialPageRoute(builder: (context) => LoginScreen()),
                 (route) => false,
               );
             },

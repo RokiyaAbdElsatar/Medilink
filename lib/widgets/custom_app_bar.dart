@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/core/constant/appcolor.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // ✅ responsive sizing
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -19,8 +20,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return PreferredSize(
-      preferredSize: const Size.fromHeight(180),
+      preferredSize: Size.fromHeight(180.h),
       child: Stack(
         children: [
           Container(
@@ -31,72 +34,76 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: SafeArea(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.8),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: IconButton(
-                          padding: EdgeInsets.zero,
-                          iconSize: 26,
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
+                  // Back button
+                  Container(
+                    height: 40.h,
+                    width: 40.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 24.sp,
+                      icon: const Icon(Icons.arrow_back, color: Colors.black),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+
+                  SizedBox(width: 12.w),
+
+                  // Title & subtitle — wrapped to avoid overflow
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
                             title,
-                            style: const TextStyle(
-                              color: Color(AppColor.medicationColor),
-                              fontSize: 34,
+                            style: TextStyle(
+                              color: const Color(AppColor.medicationColor),
+                              fontSize: 30.sp, // responsive
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          if (subtitle != null)
-                            Text(
-                              subtitle!,
-                              style: const TextStyle(
-                                color: Color(AppColor.medicationColor),
-                                fontSize: 16,
-                              ),
+                        ),
+                        if (subtitle != null)
+                          Text(
+                            subtitle!,
+                            style: TextStyle(
+                              color: const Color(AppColor.medicationColor),
+                              fontSize: 14.sp,
                             ),
-                        ],
-                      ),
-                    ],
+                          ),
+                      ],
+                    ),
                   ),
+
+                  SizedBox(width: 8.w),
+
+                  // Action icon
                   Container(
-                    height: 40,
-                    width: 40,
+                    height: 40.h,
+                    width: 40.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: shape,
                       borderRadius: shape == BoxShape.rectangle
-                          ? BorderRadius.circular(12)
+                          ? BorderRadius.circular(12.r)
                           : null,
                     ),
                     child: IconButton(
                       padding: EdgeInsets.zero,
-                      iconSize: 26,
+                      iconSize: 24.sp,
                       icon: Icon(icon, color: Colors.black),
                       onPressed: onPressed,
                     ),
@@ -111,5 +118,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(180);
+  Size get preferredSize => Size.fromHeight(180.h);
 }

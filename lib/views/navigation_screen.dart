@@ -8,14 +8,15 @@ import 'package:medilink/views/medication_screen.dart';
 import 'package:medilink/views/profile_screen.dart'; // you'll create this if not yet done
 
 class NavigationScreen extends StatefulWidget {
-  const NavigationScreen({super.key});
+  NavigationScreen({super.key, this.incomingIndex});
+  int? incomingIndex;
 
   @override
   State<NavigationScreen> createState() => _NavigationScreenState();
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
 
   // Screens list — order matches bottom nav
   final List<Widget> _screens = [
@@ -25,6 +26,12 @@ class _NavigationScreenState extends State<NavigationScreen> {
     MedicationScreen(), // replace with your MedicinesScreen() when ready
     ProfileScreen(), // placeholder for now
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.incomingIndex ?? 0; // ✅ initialize here
+  }
 
   void _onItemTapped(int index) {
     setState(() {
