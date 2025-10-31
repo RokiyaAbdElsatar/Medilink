@@ -102,11 +102,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
             ),
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.settings_outlined),
-            title: const Text('Settings'),
-            onTap: () {},
-          ),
+
           ListTile(
             leading: const Icon(Icons.question_mark),
             title: const Text('My Questions'),
@@ -120,8 +116,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 context,
                 MaterialPageRoute(builder: (context) => RateAppScreen()),
               );
-           },
-
+            },
           ),
           ListTile(
             leading: const Icon(Icons.headset_mic),
@@ -131,8 +126,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 context,
                 MaterialPageRoute(builder: (context) => SupportFAQScreen()),
               );
-           },
-
+            },
           ),
           const SizedBox(height: 225),
           ListTile(
