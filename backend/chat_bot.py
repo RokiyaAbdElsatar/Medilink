@@ -12,7 +12,7 @@ class ChatRequest(BaseModel):
 @app.post("/chatbot")
 def chatbot(req: ChatRequest):
     print("📩 Received message:", req.message)  # ← دي مهمة جدًا
-    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+    url = "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent"
     headers = {"Content-Type": "application/json"}
     params = {"key": API_KEY}
     data = {

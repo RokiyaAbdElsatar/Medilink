@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _controller.clear();
 
     // 🔗 رابط الـ FastAPI (بدّلي IP حسب جهازك)
-final url = Uri.parse('http://127.0.0.1:8000/chatbot');
+    final url = Uri.parse('http://127.0.0.1:7000/chatbot');
     try {
       final response = await http.post(
         url,
@@ -54,9 +54,10 @@ final url = Uri.parse('http://127.0.0.1:8000/chatbot');
         throw Exception('Failed to get AI response');
       }
     } catch (e) {
+      print("Error in sendMessage: $e"); // هيتشاف في التيرمنال
       setState(() {
         messages.add({
-          'text': '⚠️ Error: Could not connect to AI server.',
+          'text': '⚠️ Error: $e',
           'isUser': false,
           'time': DateFormat('HH:mm').format(DateTime.now()),
         });
@@ -107,8 +108,9 @@ final url = Uri.parse('http://127.0.0.1:8000/chatbot');
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 6),
                   child: Row(
-                    mainAxisAlignment:
-                        isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+                    mainAxisAlignment: isUser
+                        ? MainAxisAlignment.end
+                        : MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       if (!isUser) ...[
