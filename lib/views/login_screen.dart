@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // 🔹 Login User
   Future<void> _loginUser() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
@@ -38,18 +39,15 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // 🔹 Sign in with Firebase Authentication
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // 🔹 Fetch user document from Firestore (optional)
       final uid = userCredential.user!.uid;
       final doc = await _firestore.collection('patients').doc(uid).get();
 
       if (doc.exists) {
-        // ✅ Navigate to HomeScreen on success
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => NavigationScreen()),
@@ -64,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (e.code == 'user-not-found') {
         message = "No user found with that email.";
-      } else if (e.code == 'wrong-password') {
+      } else if (e.code == 'wrong-password' || e.code == 'invalid-credential') {
         message = "Incorrect password.";
       } else if (e.code == 'invalid-email') {
         message = "Invalid email format.";
@@ -82,6 +80,68 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  // 🔹 Forgot Password with Dialog
+  void _showResetPasswordDialog() {
+    final TextEditingController resetEmailController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Reset Password"),
+        content: TextField(
+          controller: resetEmailController,
+          keyboardType: TextInputType.emailAddress,
+          decoration: const InputDecoration(
+            hintText: "Enter your registered email",
+            labelText: "Email",
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () async {
+              final email = resetEmailController.text.trim();
+
+              if (email.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Please enter your email.")),
+                );
+                return;
+              }
+
+              try {
+                await _auth.sendPasswordResetEmail(email: email);
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      "Password reset link sent! Check your inbox.",
+                    ),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              } on FirebaseAuthException catch (e) {
+                String message = "Failed to send reset email.";
+                if (e.code == 'user-not-found') {
+                  message = "No user found with that email.";
+                } else if (e.code == 'invalid-email') {
+                  message = "Invalid email format.";
+                }
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(message)));
+              }
+            },
+            child: const Text("Send"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 SizedBox(height: 60.h),
 
-                /// Logo & Text
+                /// Logo & Title
                 LayoutBuilder(
                   builder: (context, constraints) {
                     return ConstrainedBox(
@@ -149,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 55.h),
 
-                /// Email
+                /// Email Field
                 TextField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -178,7 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 45.h),
 
-                /// Password
+                /// Password Field
                 TextField(
                   controller: _passwordController,
                   obscureText: !_isPasswordVisible,
@@ -190,11 +250,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             : Icons.visibility_off,
                         color: Color(AppColor.primary),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
+                      onPressed: () => setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      }),
                     ),
                     labelText: 'Password',
                     hintText: 'Enter Your Password',
@@ -221,9 +279,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: TextButton(
-                    onPressed: () {
-                      // TODO: Add password reset feature later
-                    },
+                    onPressed: _showResetPasswordDialog,
                     child: Text(
                       'Forgot Password?',
                       style: TextStyle(color: Colors.grey, fontSize: 14.sp),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/widgets/custom_textfield.dart';
 
 class MedicalInformationStep extends StatelessWidget {
@@ -200,6 +201,7 @@ class _BloodTypeDropdownState extends State<_BloodTypeDropdown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
+      dropdownColor: Color(AppColor.background),
       value: selectedType,
       decoration: InputDecoration(
         labelText: "Blood Type",

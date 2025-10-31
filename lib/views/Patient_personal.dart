@@ -38,31 +38,58 @@ class _SignUpPageState extends State<SignUpPage> {
   final doctorNameController = TextEditingController();
   final doctorPhoneController = TextEditingController();
 
-  void nextStep() => setState(() => currentStep++);
-  void prevStep() => setState(() => currentStep--);
-
-  Future<void> handleSignUp() async {
-    // Basic validation
-    if (emailController.text.isEmpty ||
-        passwordController.text.isEmpty ||
-        nameController.text.isEmpty) {
+  // Validation for step 1
+  bool _validateStepOne() {
+    if (nameController.text.trim().isEmpty ||
+        ageController.text.trim().isEmpty ||
+        genderController.text.trim().isEmpty ||
+        phoneController.text.trim().isEmpty ||
+        addressController.text.trim().isEmpty ||
+        emailController.text.trim().isEmpty ||
+        passwordController.text.trim().isEmpty ||
+        confirmPasswordController.text.trim().isEmpty ||
+        emergencyNameController.text.trim().isEmpty ||
+        relationshipController.text.trim().isEmpty ||
+        emergencyPhoneController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please fill in all required fields")),
+        const SnackBar(content: Text("Please fill in all required fields.")),
       );
-      return;
+      return false;
+    }
+
+    if (passwordController.text.trim().length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Password must be at least 6 characters."),
+        ),
+      );
+      return false;
     }
 
     if (passwordController.text.trim() !=
         confirmPasswordController.text.trim()) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Passwords do not match")));
-      return;
+      ).showSnackBar(const SnackBar(content: Text("Passwords do not match.")));
+      return false;
     }
 
+    return true;
+  }
+
+  void nextStep() {
+    if (currentStep == 0) {
+      if (_validateStepOne()) setState(() => currentStep++);
+    } else {
+      setState(() => currentStep++);
+    }
+  }
+
+  void prevStep() => setState(() => currentStep--);
+
+  Future<void> handleSignUp() async {
     setState(() => isLoading = true);
 
-    // Prepare data
     final userData = {
       'name': nameController.text.trim(),
       'age': ageController.text.trim(),
@@ -101,11 +128,10 @@ class _SignUpPageState extends State<SignUpPage> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(error)));
-    } else {
-      if (!mounted) return;
+    } else if (mounted) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     }
   }
@@ -128,11 +154,9 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             const SizedBox(height: 20),
 
-            // Progress Bar
             ProgressBar(currentStep: currentStep),
             const SizedBox(height: 20),
 
-            // Step Container
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -152,14 +176,16 @@ class _SignUpPageState extends State<SignUpPage> {
                           genderController: genderController,
                           phoneController: phoneController,
                           addressController: addressController,
-                          onContinue: nextStep,
                           emailController: emailController,
                           passwordController: passwordController,
                           confirmPasswordController: confirmPasswordController,
                           emergencyNameController: emergencyNameController,
                           relationshipController: relationshipController,
                           emergencyPhoneController: emergencyPhoneController,
-                          onBack: () {},
+                          onContinue: nextStep,
+                          onBack: () {
+                            Navigator.pop(context);
+                          },
                         ),
                         MedicalInformationStep(
                           heightController: heightController,
@@ -172,12 +198,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           doctorNameController: doctorNameController,
                           doctorPhoneController: doctorPhoneController,
                           onBack: prevStep,
-                          onContinue: handleSignUp, // 👈 calls Firebase
+                          onContinue: handleSignUp,
                         ),
                       ],
                     ),
-
-                    // Loading overlay
                     if (isLoading)
                       Container(
                         color: Colors.white70,
