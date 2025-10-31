@@ -3,14 +3,28 @@ import 'package:medilink/core/constant/appcolor.dart';
 
 class ScheduleSection extends StatefulWidget {
   final List<String> selectedDays;
+  final ValueChanged<List<String>>? onDaysChanged;
 
-  const ScheduleSection({super.key, required this.selectedDays});
+  const ScheduleSection({
+    super.key,
+    required this.selectedDays,
+    this.onDaysChanged,
+  });
 
   @override
   State<ScheduleSection> createState() => _ScheduleSectionState();
 }
 
 class _ScheduleSectionState extends State<ScheduleSection> {
+  final List<String> _days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  late List<String> _selectedDays;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDays = List<String>.from(widget.selectedDays);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,9 +59,22 @@ class _ScheduleSectionState extends State<ScheduleSection> {
           Wrap(
             spacing: 12,
             runSpacing: 12,
-            children: widget.selectedDays
-                .map((day) => _buildDayChip(day, true))
-                .toList(),
+            children: _days.map((day) {
+              final isSelected = _selectedDays.contains(day);
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (isSelected) {
+                      _selectedDays.remove(day);
+                    } else {
+                      _selectedDays.add(day);
+                    }
+                  });
+                  widget.onDaysChanged?.call(_selectedDays);
+                },
+                child: _buildDayChip(day, isSelected),
+              );
+            }).toList(),
           ),
         ],
       ),

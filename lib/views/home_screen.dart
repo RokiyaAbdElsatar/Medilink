@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/core/constant/appcolor.dart';
-import 'package:medilink/views/Pharmacies.dart';
 import 'package:medilink/views/drawer%20screen.dart';
+import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/views/notification_screen.dart';
 import 'package:medilink/views/pharmacy_container.dart';
 
@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Pharmacies(),
+                              builder: (context) => NavigationScreen(index: 1),
                             ),
                           );
                         },
@@ -286,4 +286,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

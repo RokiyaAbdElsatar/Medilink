@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/views/navigation_screen.dart';
 
@@ -13,43 +15,10 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
 
-  final List<Map<String, dynamic>> messages = [
-    {
-      'text': 'hi, i have a question about a medication i\'m taking.',
-      'isUser': true,
-      'time': '12:00',
-    },
-    {
-      'text':
-          'sure! what medication are you taking and what would you like to know',
-      'isUser': false,
-      'time': '12:00',
-    },
-    {
-      'text': 'i\'ve been prescribed amoxicillin. what is it used for?',
-      'isUser': true,
-      'time': '12:01',
-    },
-    {
-      'text':
-          'amoxicillin is an antibiotic. it’s commonly used to treat bacterial infections such as respiratory',
-      'isUser': false,
-      'time': '12:01',
-    },
-    {
-      'text': 'can i take it on an empty stomach',
-      'isUser': true,
-      'time': '12:02',
-    },
-    {
-      'text':
-          'yes, you can take amoxicillin with or without food. however, taking it with food might help reduce stomach upset',
-      'isUser': false,
-      'time': '12:02',
-    },
-  ];
+  final List<Map<String, dynamic>> messages = [];
 
-  void sendMessage() {
+  /// 🧠 دالة إرسال الرسالة واستقبال الرد من السيرفر (Gemini API)
+  Future<void> sendMessage() async {
     final messageText = _controller.text.trim();
     if (messageText.isEmpty) return;
 
@@ -63,8 +32,36 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _controller.clear();
 
-    /**  TO DO **/
-    //Chat bot response simulation
+    // 🔗 رابط الـ FastAPI (بدّلي IP حسب جهازك)
+final url = Uri.parse('http://127.0.0.1:8000/chatbot');
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'message': messageText}),
+      );
+
+      if (response.statusCode == 200) {
+        final reply = jsonDecode(response.body)['reply'];
+        setState(() {
+          messages.add({
+            'text': reply,
+            'isUser': false,
+            'time': DateFormat('HH:mm').format(DateTime.now()),
+          });
+        });
+      } else {
+        throw Exception('Failed to get AI response');
+      }
+    } catch (e) {
+      setState(() {
+        messages.add({
+          'text': '⚠️ Error: Could not connect to AI server.',
+          'isUser': false,
+          'time': DateFormat('HH:mm').format(DateTime.now()),
+        });
+      });
+    }
   }
 
   @override
@@ -110,13 +107,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 6),
                   child: Row(
-                    mainAxisAlignment: isUser
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
+                    mainAxisAlignment:
+                        isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       if (!isUser) ...[
-                        // رسالة البوت
                         Flexible(
                           child: Container(
                             padding: const EdgeInsets.all(12),
@@ -142,7 +137,6 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         ),
                       ] else ...[
-                        // رسالة المستخدم
                         Text(
                           msg['time'],
                           style: TextStyle(
@@ -190,20 +184,14 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       child: Row(
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.attach_file,
-                              color: Colors.grey,
-                            ),
-                          ),
                           Expanded(
                             child: TextField(
                               controller: _controller,
                               decoration: const InputDecoration(
-                                hintText: "Type a message",
+                                hintText: "Type a message...",
                                 border: InputBorder.none,
                               ),
+                              onSubmitted: (_) => sendMessage(),
                             ),
                           ),
                         ],

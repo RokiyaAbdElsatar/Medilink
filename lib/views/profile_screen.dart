@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/views/login_screen.dart';
-import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/widgets/emergency_contact_container.dart';
 import 'package:medilink/widgets/medical_info_container.dart';
 import 'package:medilink/widgets/personal_info_container.dart';
