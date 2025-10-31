@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medilink/views/login_screen.dart';
 import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/views/profile_screen.dart';
+import 'package:medilink/views/rate_app_screen.dart';
+import 'package:medilink/views/support_faq_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -113,12 +115,24 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ListTile(
             leading: const Icon(Icons.star_outline),
             title: const Text('Rate App'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RateAppScreen()),
+              );
+           },
+
           ),
           ListTile(
             leading: const Icon(Icons.headset_mic),
             title: const Text('Support/FAQ'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SupportFAQScreen()),
+              );
+           },
+
           ),
           const SizedBox(height: 225),
           ListTile(

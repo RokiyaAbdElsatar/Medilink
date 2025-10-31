@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medilink/core/constant/appcolor.dart';
+import 'package:medilink/models/hospital_list.dart';
 import 'package:medilink/views/drawer%20screen.dart';
 import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/views/notification_screen.dart';
-import 'package:medilink/views/pharmacy_container.dart';
+import 'package:medilink/widgets/hospital_card.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -13,14 +16,137 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> urls = [
-    "https://play-lh.googleusercontent.com/3Ayv-0-hV6MnV6EPq21gqo5ffL-2dplZUh7X797G1PLQcwnINF6vUQbWmxTKl-jMYFw",
-    "https://m.edarabia.com/wp-content/uploads/2020/04/elezaby-pharmacy-cairo-egypt.jpg",
+  // Emergency numbers list (Egypt first)
+  final List<Map<String, String>> _emergencyNumbers = [
+    {"country": "Egypt", "number": "123"},
+    {"country": "USA / Canada", "number": "911"},
+    {"country": "Europe (EU)", "number": "112"},
+    {"country": "UK", "number": "999"},
+    {"country": "Australia", "number": "000"},
+    {"country": "India", "number": "112"},
+    {"country": "China", "number": "120 / 110 / 119"},
+    {"country": "Japan", "number": "119"},
+    {"country": "Brazil", "number": "190 / 192 / 193"},
+    {"country": "South Africa", "number": "10111"},
   ];
 
-  final List<String> mainTexts = ["Misr Pharmacies", "El Ezaby Pharmacies"];
+  // Show emergency dialog
+  void _showEmergencyDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: const Row(
+            children: [
+              Icon(Icons.emergency, color: Colors.red),
+              SizedBox(width: 8),
+              Text(
+                "Emergency Numbers",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ],
+          ),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: _emergencyNumbers.length,
+              separatorBuilder: (_, __) =>
+                  const Divider(height: 1, thickness: 0.5),
+              itemBuilder: (context, index) {
+                final entry = _emergencyNumbers[index];
+                return ListTile(
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                  leading: _getCountryFlag(entry['country']!),
+                  title: Text(
+                    entry['country']!,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                  trailing: SelectableText(
+                    entry['number']!,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(AppColor.medicationColor),
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                "Close",
+                style: TextStyle(color: Color(0xFF106B96)),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-  final List<String> subTexts = ["200+ Branches", "330+ Branches"];
+  // Flag emoji or code
+  Widget _getCountryFlag(String country) {
+    final flags = {
+      "Egypt": "EG",
+      "USA / Canada": "US",
+      "Europe (EU)": "EU",
+      "UK": "GB",
+      "Australia": "AU",
+      "India": "IN",
+      "China": "CN",
+      "Japan": "JP",
+      "Brazil": "BR",
+      "South Africa": "ZA",
+    };
+    return Text(flags[country] ?? "??", style: const TextStyle(fontSize: 24));
+  }
+
+  String userName = "Loading...";
+
+  @override
+  void initState() {
+    super.initState();
+    getUserName();
+  }
+
+  Future<void> getUserName() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final doc = await FirebaseFirestore.instance
+            .collection('patients')
+            .doc(user.uid)
+            .get();
+
+        if (doc.exists) {
+          setState(() {
+            userName = doc.data()?['name'] ?? "Unknown User";
+          });
+        } else {
+          setState(() {
+            userName = "No user data";
+          });
+        }
+      }
+    } catch (e) {
+      print("Error fetching user name: $e");
+      setState(() {
+        userName = "Error";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               SizedBox(height: height * 0.07),
 
-              // ✅ Background arc shape
+              // Background arc shape
               Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -60,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ✅ Top bar
+                      // Top bar
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -98,9 +224,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SizedBox(height: height * 0.02),
                       const Text("Hello,", style: TextStyle(fontSize: 24)),
-                      const Text(
-                        "James Anderson",
-                        style: TextStyle(
+                      Text(
+                        userName,
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
@@ -111,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
 
-              // ✅ Medicine container (responsive)
+              // Medicine container
               Container(
                 width: width * 0.9,
                 height: height * 0.17,
@@ -221,12 +347,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
               SizedBox(height: height * 0.04),
 
-              // ✅ Pharmacies section
+              // Suggested Hospitals
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Suggested Pharmacies",
+                    "Suggested Hospitals",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -244,7 +370,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           );
                         },
-                        child: Text("See All", style: TextStyle(fontSize: 10)),
+                        child: Text(
+                          "See All",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFF106B96),
+                          ),
+                        ),
                       ),
                       SizedBox(width: 4),
                       Icon(Icons.arrow_forward_sharp, size: 12),
@@ -265,10 +397,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   childAspectRatio: 0.86,
                 ),
                 itemCount: 2,
-                itemBuilder: (context, index) => PharmacyContainer(
-                  imgUrl: urls[index],
-                  mainText: mainTexts[index],
-                  subText: subTexts[index],
+                itemBuilder: (context, index) => hospitalCard(
+                  h: MainHospitals[index],
+                  facilities: MainHospitals[index]["facilities"],
                 ),
               ),
               SizedBox(height: height * 0.06),
@@ -276,12 +407,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+
+      // FAB - Opens Emergency Dialog (No Call)
       floatingActionButton: FloatingActionButton(
         heroTag: "emergency_btn",
-        shape: CircleBorder(),
-        backgroundColor: Color(0xFF106B96),
-        onPressed: () {},
-        child: Image(image: AssetImage("assets/images/Vector1.png")),
+        shape: const CircleBorder(),
+        backgroundColor: const Color(0xFF106B96),
+        onPressed: _showEmergencyDialog,
+        child: Image.asset("assets/images/Vector1.png"),
       ),
     );
   }

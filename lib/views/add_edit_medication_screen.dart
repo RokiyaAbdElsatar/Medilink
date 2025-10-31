@@ -181,7 +181,7 @@ class _AddEditMedicationScreenState extends State<AddEditMedicationScreen> {
                             style: TextStyle(
                               fontSize: 22.sp,
                               fontWeight: FontWeight.bold,
-                              color: const Color(AppColor.medicationColor),
+                              color:  Color(AppColor.medicationColor),
                             ),
                           ),
                         ),
