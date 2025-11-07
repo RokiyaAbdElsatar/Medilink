@@ -6,6 +6,7 @@ import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/views/profile_screen.dart';
 import 'package:medilink/views/rate_app_screen.dart';
 import 'package:medilink/views/support_faq_screen.dart';
+import 'package:medilink/views/user_bookings_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -128,7 +129,17 @@ class _DrawerScreenState extends State<DrawerScreen> {
               );
             },
           ),
-          const SizedBox(height: 225),
+          ListTile(
+            leading: const Icon(Icons.list_alt_outlined),
+            title: const Text('My Bookings'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserBookingsScreen()),
+              );
+            },
+          ),
+          const SizedBox(height: 70),
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('Log Out'),

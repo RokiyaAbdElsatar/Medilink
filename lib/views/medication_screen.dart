@@ -32,12 +32,10 @@ class _MedicationScreenState extends State<MedicationScreen> {
             subtitle: 'Manage your medications',
             icon: Icons.notifications_outlined,
             onPressed: () {
-                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => NotificationScreen(),
-                                  ),
-                                );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationScreen()),
+              );
             },
             shape: BoxShape.circle,
           ),
@@ -202,6 +200,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
             ),
           ),
           floatingActionButton: FloatingActionButton(
+            heroTag: 'addMed',
             shape: const CircleBorder(),
             backgroundColor: Color(AppColor.medicationColor),
             onPressed: () {

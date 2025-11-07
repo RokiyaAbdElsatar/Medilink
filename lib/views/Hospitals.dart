@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:medilink/core/constant/appcolor.dart';
 import 'dart:convert';
 import 'package:medilink/views/drawer%20screen.dart';
 import 'package:medilink/widgets/hospital_card.dart';
@@ -33,7 +32,7 @@ class _HospitalsState extends State<Hospitals> {
 
     try {
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:8000/hospitals?city=$city'),
+        Uri.parse('http://192.168.1.12:8000/hospitals?city=$city'),
         headers: {'User-Agent': 'HospitalFinder/1.0'},
       );
 
@@ -184,6 +183,7 @@ class _HospitalsState extends State<Hospitals> {
     );
   }
 }
+
 
 // ========================================
 // Hospital Detail Screen (Unchanged)

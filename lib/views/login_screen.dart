@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/views/Patient_personal.dart';
+import 'package:medilink/views/admin_booking_screen.dart';
 import 'package:medilink/views/navigation_screen.dart';
 import 'package:medilink/widgets/custom_button.dart';
 
@@ -50,7 +51,11 @@ class _LoginScreenState extends State<LoginScreen> {
       if (doc.exists) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => NavigationScreen()),
+          MaterialPageRoute(
+            builder: (context) => uid == "4lfebMK0JUcKbLWj8pujHgzEUCG3"
+                ? AdminBookingScreen()
+                : NavigationScreen(),
+          ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

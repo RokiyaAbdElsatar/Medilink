@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medilink/core/constant/appcolor.dart';
+import 'package:medilink/services/booking_service.dart';
 import 'package:medilink/views/notification_screen.dart';
 import 'package:medilink/widgets/custom_app_bar.dart';
 
@@ -30,6 +31,7 @@ class _BookingScreenState extends State<BookingScreen> {
   final _cardExpiryCtrl = TextEditingController();
   final _cardCVVCtrl = TextEditingController();
   final _walletPhoneCtrl = TextEditingController();
+  final _bookingService = BookingService();
 
   DateTime? _date;
   TimeOfDay? _time;
@@ -329,22 +331,40 @@ class _BookingScreenState extends State<BookingScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _isValid
-                      ? () {
+                      ? () async {
                           if (_formKey.currentState!.validate()) {
                             final method = _payment == PaymentMethod.cod
                                 ? "COD"
                                 : _payment == PaymentMethod.card
                                 ? "CARD"
                                 : "WALLET";
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  "Booking Confirmed! Paid via $method",
+
+                            try {
+                              await _bookingService.addBooking(
+                                hospital: widget.hospital,
+                                service: widget.service,
+                                date: _date!,
+                                time: _time!.format(context),
+                                address: _addrCtrl.text.trim(),
+                                phone: _phoneCtrl.text.trim(),
+                                paymentMethod: method,
+                              );
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Booking added successfully!"),
+                                  backgroundColor: Colors.green,
                                 ),
-                                backgroundColor: Colors.green,
-                              ),
-                            );
-                            _clearAll();
+                              );
+                              _clearAll();
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Error: $e"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
                           }
                         }
                       : null,

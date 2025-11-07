@@ -14,43 +14,43 @@ class _NotificationScreenState extends State<NotificationScreen> {
   bool allSelected = true;
   bool unreadSelected = false;
 
-  List<NotificationModel> notifications = [
-    NotificationModel(
-      mainText: "Medication Reminders",
-      subText: "It’s time to take your Vitamin D (1000 IU)",
-    ),
-    NotificationModel(
-      mainText: "Medication Reminders",
-      subText: "Don’t forget your morning Metformin dose",
-    ),
-    NotificationModel(
-      mainText: "Missed or Skipped Doses",
-      subText: "You skipped your 8 AM Aspirin dose",
-    ),
-    NotificationModel(
-      mainText: "Schedule or Plan Updates",
-      subText: "New medication added: Amoxicillin 500 mg",
-    ),
-    NotificationModel(
-      mainText: "Health and Checkup Reminders",
-      subText: "Check your temperature before taking the next dose",
-    ),
-  ];
+  // List<NotificationModel> notifications = [
+  //   NotificationModel(
+  //     mainText: "Medication Reminders",
+  //     subText: "It’s time to take your Vitamin D (1000 IU)",
+  //   ),
+  //   NotificationModel(
+  //     mainText: "Medication Reminders",
+  //     subText: "Don’t forget your morning Metformin dose",
+  //   ),
+  //   NotificationModel(
+  //     mainText: "Missed or Skipped Doses",
+  //     subText: "You skipped your 8 AM Aspirin dose",
+  //   ),
+  //   NotificationModel(
+  //     mainText: "Schedule or Plan Updates",
+  //     subText: "New medication added: Amoxicillin 500 mg",
+  //   ),
+  //   NotificationModel(
+  //     mainText: "Health and Checkup Reminders",
+  //     subText: "Check your temperature before taking the next dose",
+  //   ),
+  // ];
 
-  List<NotificationModel> notificationsUnread = [
-    NotificationModel(
-      mainText: "Medication Reminders",
-      subText: "It’s time to take your Vitamin D (1000 IU)",
-    ),
-    NotificationModel(
-      mainText: "Medication Reminders",
-      subText: "Don’t forget your morning Metformin dose",
-    ),
-    NotificationModel(
-      mainText: "Missed or Skipped Doses",
-      subText: "You skipped your 8 AM Aspirin dose",
-    ),
-  ];
+  // List<NotificationModel> notificationsUnread = [
+  //   NotificationModel(
+  //     mainText: "Medication Reminders",
+  //     subText: "It’s time to take your Vitamin D (1000 IU)",
+  //   ),
+  //   NotificationModel(
+  //     mainText: "Medication Reminders",
+  //     subText: "Don’t forget your morning Metformin dose",
+  //   ),
+  //   NotificationModel(
+  //     mainText: "Missed or Skipped Doses",
+  //     subText: "You skipped your 8 AM Aspirin dose",
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
