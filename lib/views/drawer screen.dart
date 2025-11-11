@@ -104,42 +104,43 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
           const Divider(),
 
-          ListTile(
-            leading: const Icon(Icons.question_mark),
-            title: const Text('My Questions'),
-            onTap: () {},
+          Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.star_outline),
+                title: const Text('Rate App'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RateAppScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.headset_mic),
+                title: const Text('Support/FAQ'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SupportFAQScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.list_alt_outlined),
+                title: const Text('My Bookings'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserBookingsScreen(),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-          ListTile(
-            leading: const Icon(Icons.star_outline),
-            title: const Text('Rate App'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RateAppScreen()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.headset_mic),
-            title: const Text('Support/FAQ'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SupportFAQScreen()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.list_alt_outlined),
-            title: const Text('My Bookings'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => UserBookingsScreen()),
-              );
-            },
-          ),
-          const SizedBox(height: 70),
+          const SizedBox(height: 200),
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('Log Out'),

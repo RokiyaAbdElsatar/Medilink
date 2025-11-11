@@ -108,17 +108,17 @@ class PersonalInfoContainer extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.language,
-                              color: Color(AppColor.primary),
-                              size: 20,
-                            ),
-                            SizedBox(width: 6),
-                            Text("$language"),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Icon(
+                        //       Icons.language,
+                        //       color: Color(AppColor.primary),
+                        //       size: 20,
+                        //     ),
+                        //     SizedBox(width: 6),
+                        //     Text("$language"),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),

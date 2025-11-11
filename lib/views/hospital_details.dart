@@ -145,11 +145,7 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen>
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
-          _buildInfoRow(
-            Icons.location_on,
-            widget.hospital['address'],
-            "Visit here",
-          ),
+          _buildInfoRow(Icons.location_on, widget.hospital['address'], null),
           _buildInfoRow(Icons.phone, widget.hospital['phone'], null),
           _buildInfoRow(Icons.access_time, "24/7", null),
 
@@ -195,14 +191,14 @@ class _HospitalDetailScreenState extends State<HospitalDetailScreen>
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String text, String? action) {
+  Widget _buildInfoRow(IconData icon, String? text, String? action) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
           Icon(icon, size: 20, color: const Color(0xFF0B7BA8)),
           const SizedBox(width: 12),
-          Expanded(child: Text(text)),
+          Expanded(child: Text(text ?? "Not available")),
           if (action != null)
             Text(
               action,

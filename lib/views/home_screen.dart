@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Emergency numbers list (Egypt first)
   final List<Map<String, String>> _emergencyNumbers = [
     {"country": "Egypt", "number": "123"},
     {"country": "USA / Canada", "number": "911"},
@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     {"country": "South Africa", "number": "10111"},
   ];
 
-  // Show emergency dialog
   void _showEmergencyDialog() {
     showDialog(
       context: context,
@@ -96,21 +95,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Flag emoji or code
   Widget _getCountryFlag(String country) {
     final flags = {
-      "Egypt": "EG",
-      "USA / Canada": "US",
-      "Europe (EU)": "EU",
-      "UK": "GB",
-      "Australia": "AU",
-      "India": "IN",
-      "China": "CN",
-      "Japan": "JP",
-      "Brazil": "BR",
-      "South Africa": "ZA",
+      "Egypt": "🇪🇬",
+      "USA / Canada": "🇺🇸",
+      "Europe (EU)": "🇪🇺",
+      "UK": "🇬🇧",
+      "Australia": "🇦🇺",
+      "India": "🇮🇳",
+      "China": "🇨🇳",
+      "Japan": "🇯🇵",
+      "Brazil": "🇧🇷",
+      "South Africa": "🇿🇦",
     };
-    return Text(flags[country] ?? "??", style: const TextStyle(fontSize: 24));
+    return Text(flags[country] ?? "🏥", style: const TextStyle(fontSize: 24));
   }
 
   String userName = "Loading...";
@@ -164,8 +162,6 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: height * 0.07),
-
-              // Background arc shape
               Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -177,16 +173,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: height * 0.45,
                       decoration: const BoxDecoration(
                         color: Color(AppColor.background),
-                        borderRadius: BorderRadius.all(
-                          Radius.elliptical(600, 400),
-                        ),
+                        borderRadius:
+                            BorderRadius.all(Radius.elliptical(600, 400)),
                       ),
                     ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Top bar
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -194,10 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context) => CircleAvatar(
                               backgroundColor: Colors.white,
                               child: IconButton(
-                                icon: const Icon(
-                                  Icons.menu,
-                                  color: Colors.black,
-                                ),
+                                icon: const Icon(Icons.menu, color: Colors.black),
                                 onPressed: () =>
                                     Scaffold.of(context).openDrawer(),
                               ),
@@ -206,16 +197,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           CircleAvatar(
                             backgroundColor: Colors.white,
                             child: IconButton(
-                              icon: const Icon(
-                                Icons.notifications_outlined,
-                                color: Colors.black,
-                              ),
+                              icon: const Icon(Icons.notifications_outlined,
+                                  color: Colors.black),
                               onPressed: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => NotificationScreen(),
-                                  ),
+                                      builder: (context) =>
+                                          NotificationScreen()),
                                 );
                               },
                             ),
@@ -227,9 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         userName,
                         style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: height * 0.05),
                     ],
@@ -237,112 +224,102 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
 
-              // Medicine container
-              Container(
-                width: width * 0.9,
-                height: height * 0.17,
-                decoration: BoxDecoration(
-                  color: const Color(AppColor.primary),
-                  borderRadius: BorderRadius.circular(12),
+              // ✅ Medical Tips Slider
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: height * 0.22,
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  autoPlayInterval: const Duration(seconds: 5),
+                  viewportFraction: 0.9,
+                  aspectRatio: 16 / 9,
+                  scrollDirection: Axis.horizontal,
                 ),
-                padding: EdgeInsets.all(width * 0.03),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/Vector.png",
-                          width: width * 0.1,
-                        ),
-                        SizedBox(width: width * 0.03),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "Aspirin",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              "One daily",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                              ),
-                            ),
-                            Text(
-                              "100 mg",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color(AppColor.doneChoose),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: width * 0.02,
-                            vertical: height * 0.005,
-                          ),
-                          child: const Text(
-                            "Mark as taken",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: height * 0.015),
-                    Container(
-                      height: height * 0.04,
+                items: [
+                  {
+                    "image": "assets/images/advice.png",
+                    "title": "اشرب كمية كافية من المياه 💧",
+                    "desc":
+                        "الماء يساعد على تنشيط الدورة الدموية وتحسين التركيز والطاقة.",
+                  },
+                  {
+                    "image": "assets/images/advice.png",
+                    "title": "نم بشكل كافي 😴",
+                    "desc":
+                        "النوم من 7 إلى 8 ساعات يوميًا يحافظ على صحة القلب والمناعة.",
+                  },
+                  {
+                    "image": "assets/images/advice.png",
+                    "title": "مارس الرياضة 🏃‍♀️",
+                    "desc":
+                        "حتى 30 دقيقة مشي يوميًا تقيك من أمراض القلب والسمنة.",
+                  },
+                  {
+                    "image": "assets/images/advice.png",
+                    "title": "كل خضار وفواكه 🥗",
+                    "desc":
+                        "مصدر غني بالفيتامينات والمعادن الضرورية لصحتك اليومية.",
+                  },
+                ].map((tip) {
+                  return Builder(builder: (BuildContext context) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(horizontal: width * 0.015),
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.calendar_today_outlined,
-                                color: Color(AppColor.primary),
-                                size: 18,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                "Wed, 10 Sep 2025",
-                                style: TextStyle(fontSize: 11),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.access_time,
-                                color: Color(AppColor.primary),
-                                size: 18,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                "10:00 - 10:30 AM",
-                                style: TextStyle(fontSize: 11),
-                              ),
-                            ],
+                        color: const Color(0xFFE7F4F9),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
+                      child: Row(
+                        children: [
+                          SizedBox(width: width * 0.03),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(
+                              tip["image"]!,
+                              width: width * 0.25,
+                              height: height * 0.16,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(width: width * 0.04),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(right: width * 0.03),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    tip["title"]!,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF106B96),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.008),
+                                  Text(
+                                    tip["desc"]!,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+                }).toList(),
               ),
 
               SizedBox(height: height * 0.04),
@@ -351,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Suggested Hospitals",
                     style: TextStyle(
                       fontSize: 16,
@@ -366,11 +343,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => NavigationScreen(index: 1),
+                              builder: (context) =>
+                                  NavigationScreen(index: 1),
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           "See All",
                           style: TextStyle(
                             fontSize: 12,
@@ -378,8 +356,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 4),
-                      Icon(Icons.arrow_forward_sharp, size: 12),
+                      const SizedBox(width: 4),
+                      const Icon(Icons.arrow_forward_sharp, size: 12),
                     ],
                   ),
                 ],
@@ -407,8 +385,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
-      // FAB - Opens Emergency Dialog (No Call)
       floatingActionButton: FloatingActionButton(
         heroTag: "emergency_btn",
         shape: const CircleBorder(),

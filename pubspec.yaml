@@ -51,6 +51,8 @@ dependencies:
   timezone: ^0.10.1
   flutter_native_timezone_latest: ^1.0.0
   android_intent_plus: ^6.0.0
+  device_info_plus: ^12.2.0
+  carousel_slider: ^5.1.1
 
 dev_dependencies:
   flutter_test:

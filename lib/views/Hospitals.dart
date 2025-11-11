@@ -80,12 +80,15 @@ class _HospitalsState extends State<Hospitals> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
-        title: const Text(
-          "Hospitals",
-          style: TextStyle(
-            color: Color(0xFF0B7BA8),
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: const Text(
+            "Hospitals",
+            style: TextStyle(
+              color: Color(0xFF0B7BA8),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         centerTitle: true,
@@ -183,7 +186,6 @@ class _HospitalsState extends State<Hospitals> {
     );
   }
 }
-
 
 // ========================================
 // Hospital Detail Screen (Unchanged)
