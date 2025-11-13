@@ -1,9 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:medilink/views/login_screen.dart';
 import 'package:medilink/views/navigation_screen.dart';
-import 'package:medilink/views/profile_screen.dart';
 import 'package:medilink/views/rate_app_screen.dart';
 import 'package:medilink/views/support_faq_screen.dart';
 import 'package:medilink/views/user_bookings_screen.dart';
@@ -17,11 +18,13 @@ class DrawerScreen extends StatefulWidget {
 
 class _DrawerScreenState extends State<DrawerScreen> {
   String userName = "Loading...";
+  File? _profileImage;
 
   @override
   void initState() {
     super.initState();
     getUserName();
+    _loadProfileImage();
   }
 
   Future<void> getUserName() async {
@@ -51,6 +54,16 @@ class _DrawerScreenState extends State<DrawerScreen> {
     }
   }
 
+  Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final imagePath = prefs.getString('profile_image');
+    if (imagePath != null && File(imagePath).existsSync()) {
+      setState(() {
+        _profileImage = File(imagePath);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -61,13 +74,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
           const SizedBox(height: 30),
           Row(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 16),
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
                 child: CircleAvatar(
                   radius: 40,
-                  child: Image(
-                    image: AssetImage("assets/images/Ellipse 9.png"),
-                  ),
+                  backgroundColor: Colors.grey[200],
+                  backgroundImage: _profileImage != null
+                      ? FileImage(_profileImage!)
+                      : const AssetImage("assets/images/Ellipse 9.png") as ImageProvider,
                 ),
               ),
             ],
@@ -76,7 +90,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
           Padding(
             padding: const EdgeInsets.only(left: 16),
             child: Text(
-              userName, // ✅ اسم اليوزر من Firebase
+              userName,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,
@@ -96,7 +110,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   ),
                 );
               },
-              child: Text(
+              child: const Text(
                 "View Profile",
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
@@ -132,9 +146,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => UserBookingsScreen(),
-                    ),
+                    MaterialPageRoute(builder: (context) => UserBookingsScreen()),
                   );
                 },
               ),
@@ -142,8 +154,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
           const SizedBox(height: 200),
           ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Log Out'),
+            leading: const Icon(Icons.logout),
+            title: const Text('Log Out'),
             onTap: () async {
               await FirebaseAuth.instance.signOut();
               Navigator.pushAndRemoveUntil(

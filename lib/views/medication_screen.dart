@@ -117,8 +117,11 @@ class _MedicationScreenState extends State<MedicationScreen> {
                             onDelete: () async {
                               await _medService.deleteMedication(med.id);
                             },
-                            onDone: () {
-                              // You can implement marking as taken
+                            onDone: () async {
+                              await _medService.markMedicationAsTaken(med.id);
+                              setState(
+                                () {},
+                              ); // لتحديث واجهة المستخدم بعد التغيير
                             },
                             onTap: () {
                               Navigator.push(
@@ -180,7 +183,13 @@ class _MedicationScreenState extends State<MedicationScreen> {
                             onDelete: () async {
                               await _medService.deleteMedication(med.id);
                             },
-                            onDone: () {},
+                            onDone: () async {
+                              // ✅ هنا نعلم الدواء انه اتاخد
+                              await _medService.markMedicationAsTaken(med.id);
+                              setState(
+                                () {},
+                              ); // لتحديث واجهة المستخدم بعد التغيير
+                            },
                             onTap: () {
                               Navigator.push(
                                 context,

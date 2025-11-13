@@ -11,28 +11,23 @@ import 'package:flutter_native_timezone_latest/flutter_native_timezone_latest.da
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-// ✅ Global key for showing SnackBars anywhere (even outside Scaffold)
 final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // ✅ Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // ✅ Initialize timezone
   tz.initializeTimeZones();
   final String tzName = await FlutterNativeTimezoneLatest.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(tzName));
 
-  // ✅ Print current times for debugging
   final now = DateTime.now();
   final tzNow = tz.TZDateTime.now(tz.local);
   print('🕓 System time: $now');
   print('🌍 TZ time: $tzNow (${tz.local.name})');
 
-  // ✅ Initialize local notifications
   await NotificationHelper().init();
 
   runApp(const MedilinkApp());
@@ -52,10 +47,8 @@ class MedilinkApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Medilink',
 
-        // 🟦 Entry point
         home: const SplashScreen(),
 
-        // 🧭 Routes
         routes: {
           '/login': (context) => const LoginScreen(),
           '/chat': (context) => const ChatScreen(),

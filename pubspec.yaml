@@ -53,6 +53,9 @@ dependencies:
   android_intent_plus: ^6.0.0
   device_info_plus: ^12.2.0
   carousel_slider: ^5.1.1
+  image_picker: ^1.2.1
+  firebase_storage: ^13.0.4
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

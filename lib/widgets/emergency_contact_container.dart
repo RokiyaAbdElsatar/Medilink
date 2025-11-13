@@ -6,8 +6,12 @@ class EmergencyContactContainer extends StatelessWidget {
     super.key,
     required this.phone,
     required this.onEdit,
+    required this.name,
+    required this.relationShip,
   });
+  final String name;
   final String phone;
+  final String relationShip;
   final VoidCallback onEdit;
 
   @override
@@ -69,21 +73,34 @@ class EmergencyContactContainer extends StatelessWidget {
                         Row(
                           children: [
                             Icon(
+                              Icons.person_outline,
+                              color: Color(AppColor.primary),
+                              size: 20,
+                            ),
+                            SizedBox(width: 6),
+                            Text("$name"),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
                               Icons.phone_outlined,
                               color: Color(AppColor.primary),
                               size: 20,
                             ),
                             SizedBox(width: 6),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Emergency Number"),
-                                Text(
-                                  "$phone",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              ],
+                            Text("$phone"),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.people_alt_outlined,
+                              color: Color(AppColor.primary),
+                              size: 20,
                             ),
+                            SizedBox(width: 6),
+                            Text("$relationShip"),
                           ],
                         ),
                       ],

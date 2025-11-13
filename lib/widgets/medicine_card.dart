@@ -7,6 +7,7 @@ class MedicineCard extends StatelessWidget {
   final String dosage;
   final String freq;
   final String time;
+  final bool taken; // جديد
   final VoidCallback? onDone;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
@@ -18,6 +19,7 @@ class MedicineCard extends StatelessWidget {
     required this.dosage,
     required this.freq,
     required this.time,
+    this.taken = false,
     this.onDone,
     this.onEdit,
     this.onDelete,
@@ -27,7 +29,7 @@ class MedicineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap, // ✅ Let parent decide what happens on tap
+      onTap: onTap,
       child: Container(
         margin: EdgeInsets.only(bottom: 10.h),
         padding: EdgeInsets.all(12.w),
@@ -46,7 +48,7 @@ class MedicineCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Left icon box
+            // Left icon
             Container(
               width: 50.w,
               height: 55.h,
@@ -71,7 +73,8 @@ class MedicineCard extends StatelessWidget {
                     name,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: Color(AppColor.medicationColor),
+                      color: taken ? Colors.grey : Color(AppColor.medicationColor),
+                      decoration: taken ? TextDecoration.lineThrough : null,
                       fontWeight: FontWeight.bold,
                       fontSize: 16.sp,
                     ),
@@ -117,7 +120,7 @@ class MedicineCard extends StatelessWidget {
                   onPressed: onDone,
                   icon: Icon(
                     Icons.check_circle_outline_rounded,
-                    color: Color(AppColor.doneChoose),
+                    color: taken ? Colors.green : Color(AppColor.doneChoose),
                     size: 22.sp,
                   ),
                 ),

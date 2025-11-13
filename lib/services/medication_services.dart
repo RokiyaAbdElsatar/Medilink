@@ -80,4 +80,17 @@ class MedicationService {
     await _medCollection.doc(id).delete();
     await _notifier.cancelMedicationNotifications(id);
   }
+
+  Future<void> markMedicationAsTaken(String medId) async {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) return;
+
+  await FirebaseFirestore.instance
+      .collection('patients')
+      .doc(user.uid)
+      .collection('medications')
+      .doc(medId)
+      .update({'taken': true}); // أو العكس لو حابة toggle
+}
+
 }

@@ -9,6 +9,7 @@ class Medication {
   final String time; // e.g. 9:00 AM
   final List<String> days;
   final Timestamp createdAt;
+  final bool taken; // جديد
 
   Medication({
     required this.id,
@@ -19,17 +20,19 @@ class Medication {
     required this.time,
     required this.days,
     required this.createdAt,
+    this.taken = false,
   });
 
   Map<String, dynamic> toMap() => {
-    'name': name,
-    'dosage': dosage,
-    'frequency': frequency,
-    'timeCategory': timeCategory,
-    'time': time,
-    'days': days,
-    'createdAt': createdAt,
-  };
+        'name': name,
+        'dosage': dosage,
+        'frequency': frequency,
+        'timeCategory': timeCategory,
+        'time': time,
+        'days': days,
+        'createdAt': createdAt,
+        'taken': taken,
+      };
 
   factory Medication.fromDoc(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
@@ -42,6 +45,7 @@ class Medication {
       time: data['time'] ?? '',
       days: List<String>.from(data['days'] ?? []),
       createdAt: data['createdAt'] ?? Timestamp.now(),
+      taken: data['taken'] ?? false,
     );
   }
 }
