@@ -4,7 +4,6 @@ import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/models/medication_model.dart';
 import 'package:medilink/services/medication_services.dart';
 import 'package:medilink/views/add_edit_medication_screen.dart';
-import 'package:medilink/views/medication_details_screen.dart';
 import 'package:medilink/views/notification_screen.dart';
 import 'package:medilink/widgets/custom_app_bar.dart';
 import 'package:medilink/widgets/medicine_card.dart';
@@ -34,7 +33,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NotificationScreen()),
+                MaterialPageRoute(builder: (context) => const NotificationScreen()),
               );
             },
             shape: BoxShape.circle,
@@ -50,7 +49,12 @@ class _MedicationScreenState extends State<MedicationScreen> {
                 }
 
                 if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
+                  return Center(
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  );
                 }
 
                 final meds = snapshot.data ?? [];
@@ -77,128 +81,36 @@ class _MedicationScreenState extends State<MedicationScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 🌅 Morning Section
+                      // Morning Section
                       if (morningMeds.isNotEmpty) ...[
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.sunny,
-                              color: Color(AppColor.primary),
-                              size: 32.sp,
-                            ),
-                            SizedBox(width: 5.w),
-                            Text(
-                              'Morning',
-                              style: TextStyle(
-                                fontSize: 26.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Color(AppColor.primary),
-                              ),
-                            ),
-                          ],
-                        ),
+                        _buildSectionHeader('Morning', Icons.sunny),
                         SizedBox(height: 10.h),
                         ...morningMeds.map(
                           (med) => MedicineCard(
+                            id: med.id,
                             name: med.name,
                             dosage: med.dosage,
                             freq: med.frequency,
                             time: med.time,
-                            onEdit: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddEditMedicationScreen(
-                                    existingMedication: med,
-                                  ),
-                                ),
-                              );
-                            },
-                            onDelete: () async {
-                              await _medService.deleteMedication(med.id);
-                            },
-                            onDone: () async {
-                              await _medService.markMedicationAsTaken(med.id);
-                              setState(
-                                () {},
-                              ); // لتحديث واجهة المستخدم بعد التغيير
-                            },
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      MedicationDetailsScreen(medication: med),
-                                ),
-                              );
-                            },
+                            taken: med.taken ?? false, med: med,
                           ),
                         ),
-                        Divider(
-                          color: Color(AppColor.textHint).withOpacity(0.8),
-                          thickness: 0.5,
-                          indent: 40.w,
-                          endIndent: 40.w,
-                        ),
+                        _buildDivider(),
                         SizedBox(height: 10.h),
                       ],
 
-                      // 🌙 Night Section
+                      // Night Section
                       if (nightMeds.isNotEmpty) ...[
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.nightlight,
-                              color: Color(AppColor.primary),
-                              size: 32.sp,
-                            ),
-                            SizedBox(width: 5.w),
-                            Text(
-                              'Night',
-                              style: TextStyle(
-                                fontSize: 26.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Color(AppColor.primary),
-                              ),
-                            ),
-                          ],
-                        ),
+                        _buildSectionHeader('Night', Icons.nightlight),
                         SizedBox(height: 10.h),
                         ...nightMeds.map(
                           (med) => MedicineCard(
+                            id: med.id,
                             name: med.name,
                             dosage: med.dosage,
                             freq: med.frequency,
                             time: med.time,
-                            onEdit: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddEditMedicationScreen(
-                                    existingMedication: med,
-                                  ),
-                                ),
-                              );
-                            },
-                            onDelete: () async {
-                              await _medService.deleteMedication(med.id);
-                            },
-                            onDone: () async {
-                              // ✅ هنا نعلم الدواء انه اتاخد
-                              await _medService.markMedicationAsTaken(med.id);
-                              setState(
-                                () {},
-                              ); // لتحديث واجهة المستخدم بعد التغيير
-                            },
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      MedicationDetailsScreen(medication: med),
-                                ),
-                              );
-                            },
+                            taken: med.taken ?? false, med: med,
                           ),
                         ),
                       ],
@@ -211,7 +123,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
           floatingActionButton: FloatingActionButton(
             heroTag: 'addMed',
             shape: const CircleBorder(),
-            backgroundColor: Color(AppColor.medicationColor),
+            backgroundColor: const Color(AppColor.medicationColor),
             onPressed: () {
               Navigator.push(
                 context,
@@ -223,11 +135,43 @@ class _MedicationScreenState extends State<MedicationScreen> {
             child: Icon(
               Icons.add,
               size: 30.sp,
-              color: Color(AppColor.textSecondary),
+              color: const Color(AppColor.textSecondary),
             ),
           ),
         );
       },
+    );
+  }
+
+  // Helper: Section header (Morning/Night)
+  Widget _buildSectionHeader(String title, IconData icon) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: const Color(AppColor.primary),
+          size: 32.sp,
+        ),
+        SizedBox(width: 5.w),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 26.sp,
+            fontWeight: FontWeight.bold,
+            color: const Color(AppColor.primary),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Helper: Divider between sections
+  Widget _buildDivider() {
+    return Divider(
+      color: const Color(AppColor.textHint).withOpacity(0.8),
+      thickness: 0.5,
+      indent: 40.w,
+      endIndent: 40.w,
     );
   }
 }

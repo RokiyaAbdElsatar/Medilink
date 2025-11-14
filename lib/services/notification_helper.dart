@@ -51,23 +51,25 @@ class NotificationHelper {
   }
 
   Future<void> _sendNotificationNow(Medication med, int id) async {
-    await _plugin.show(
-      id,
-      'Time for ${med.name}',
-      '${med.dosage} • ${med.frequency}',
-      _details(),
-      payload: med.id,
-    );
+    if (!med.taken) {
+      await _plugin.show(
+        id,
+        'Time for ${med.name}',
+        '${med.dosage} • ${med.frequency}',
+        _details(),
+        payload: med.id,
+      );
 
-    // ✅ Save inside app only once
-    InAppNotificationService().addNotification(
-      NotificationModel(
-        mainText: 'Time for ${med.name}',
-        subText: '${med.dosage} • ${med.frequency}',
-      ),
-    );
+      // ✅ Save inside app only once
+      InAppNotificationService().addNotification(
+        NotificationModel(
+          mainText: 'Time for ${med.name}',
+          subText: '${med.dosage} • ${med.frequency}',
+        ),
+      );
 
-    print('💊 Notification triggered for ${med.name}');
+      print('💊 Notification triggered for ${med.name}');
+    }
   }
 
   // 🔹 One-time reminder

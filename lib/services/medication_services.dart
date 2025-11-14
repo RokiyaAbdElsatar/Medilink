@@ -90,7 +90,7 @@ class MedicationService {
       .doc(user.uid)
       .collection('medications')
       .doc(medId)
-      .update({'taken': true}); // أو العكس لو حابة toggle
+      .update({'taken': true}); 
 }
 
 }
