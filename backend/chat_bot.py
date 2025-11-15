@@ -4,7 +4,7 @@ import requests
 
 app = FastAPI()
 
-API_KEY = "AIzaSyBN7yYk6sJpt5Yc507SjNTySB2tCtV6gbQ"
+API_KEY = "YOUR_API_KEY_HERE"
 
 # 🧠 ذاكرة المحادثة لكل مستخدم
 user_sessions = {}
