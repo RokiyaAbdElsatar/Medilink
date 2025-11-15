@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/widgets/custom_textfield.dart';
 
-class SignUpStepOne extends StatelessWidget {
+class SignUpStepOne extends StatefulWidget {
   final TextEditingController nameController;
   final TextEditingController ageController;
   final TextEditingController genderController;
@@ -34,113 +35,120 @@ class SignUpStepOne extends StatelessWidget {
   });
 
   @override
+  State<SignUpStepOne> createState() => _SignUpStepOneState();
+}
+
+class _SignUpStepOneState extends State<SignUpStepOne> {
+  String? selectedGender;
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 10,
         children: [
           const _SectionTitle("Personal Information"),
-          const SizedBox(height: 5),
           CustomTextField(
             label: "Name",
             hint: "Enter Your Name",
-            controller: nameController,
+            controller: widget.nameController,
           ),
           CustomTextField(
             label: "Age",
             hint: "Enter Your Age",
-            controller: ageController,
+            controller: widget.ageController,
+            keyboardType: TextInputType.number,
           ),
-          CustomTextField(
-            label: "Gender",
-            hint: "Select Your Gender",
-            controller: genderController,
+          DropdownButtonFormField<String>(
+            dropdownColor: Color(AppColor.background),
+            value: selectedGender,
+            decoration: const InputDecoration(
+              labelText: "Gender",
+              border: OutlineInputBorder(),
+            ),
+            items: const [
+              DropdownMenuItem(value: "Male", child: Text("Male")),
+              DropdownMenuItem(
+                value: "Female",
+                child: Text("Female", selectionColor: Color(AppColor.primary)),
+              ),
+            ],
+            onChanged: (value) {
+              setState(() {
+                selectedGender = value;
+                widget.genderController.text = value!;
+              });
+            },
           ),
+          const SizedBox(height: 10),
           CustomTextField(
             label: "Phone",
             hint: "Enter Your Phone",
-            controller: phoneController,
+            controller: widget.phoneController,
+            keyboardType: TextInputType.phone,
           ),
           CustomTextField(
             label: "Address",
-            hint: "Enter Your Full Address",
-            controller: addressController,
+            hint: "Enter Your Address",
+            controller: widget.addressController,
           ),
           CustomTextField(
             label: "Email",
             hint: "Enter Your Email",
-            controller: emailController,
+            controller: widget.emailController,
+            keyboardType: TextInputType.emailAddress,
           ),
           CustomTextField(
             label: "Password",
-            hint: "At Least 6 Character",
-            controller: passwordController,
+            hint: "At least 6 characters",
+            controller: widget.passwordController,
             isPassword: true,
           ),
           CustomTextField(
             label: "Confirm Password",
-            hint: "Confirm Your Password",
-            controller: confirmPasswordController,
+            hint: "Confirm Password",
+            controller: widget.confirmPasswordController,
             isPassword: true,
           ),
-
-          const SizedBox(height: 20),
-          Divider(color: Colors.grey[400]),
           const SizedBox(height: 20),
           const _SectionTitle("Emergency Contact Info"),
-          const SizedBox(height: 10),
           CustomTextField(
             label: "Name",
-            hint: "Enter Contact Name",
-            controller: emergencyNameController,
+            hint: "Contact Name",
+            controller: widget.emergencyNameController,
           ),
           CustomTextField(
             label: "Relationship",
-            hint: "Eg: Mum",
-            controller: relationshipController,
+            hint: "e.g. Mom, Brother",
+            controller: widget.relationshipController,
           ),
           CustomTextField(
             label: "Phone Number",
             hint: "Enter Contact Phone",
-            controller: emergencyPhoneController,
+            controller: widget.emergencyPhoneController,
+            keyboardType: TextInputType.phone,
           ),
-
           const SizedBox(height: 25),
-
-          // Buttons
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xff00AEEF),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
                 ),
-                onPressed: onContinue,
+                onPressed: widget.onContinue,
                 child: const Text(
                   "Continue",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
               const SizedBox(height: 10),
               TextButton(
-                onPressed: onBack,
+                onPressed: widget.onBack,
                 child: const Text(
                   "Back",
-                  style: TextStyle(
-                    color: Color(0xff00AEEF),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: TextStyle(color: Color(0xff00AEEF), fontSize: 15),
                 ),
               ),
             ],
@@ -157,12 +165,15 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: const TextStyle(
-        color: Color(0xff0078B7),
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: Color(0xff0078B7),
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/views/navigation_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -12,46 +16,51 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
+  final List<Map<String, dynamic>> messages = [];
 
-  final List<Map<String, dynamic>> messages = [
-    {
-      'text': 'hi, i have a question about a medication i\'m taking.',
-      'isUser': true,
-      'time': '12:00',
-    },
-    {
-      'text':
-          'sure! what medication are you taking and what would you like to know',
-      'isUser': false,
-      'time': '12:00',
-    },
-    {
-      'text': 'i\'ve been prescribed amoxicillin. what is it used for?',
-      'isUser': true,
-      'time': '12:01',
-    },
-    {
-      'text':
-          'amoxicillin is an antibiotic. it’s commonly used to treat bacterial infections such as respiratory',
-      'isUser': false,
-      'time': '12:01',
-    },
-    {
-      'text': 'can i take it on an empty stomach',
-      'isUser': true,
-      'time': '12:02',
-    },
-    {
-      'text':
-          'yes, you can take amoxicillin with or without food. however, taking it with food might help reduce stomach upset',
-      'isUser': false,
-      'time': '12:02',
-    },
-  ];
+  String? userId;
 
-  void sendMessage() {
+  @override
+  void initState() {
+    super.initState();
+    _initializeUserId();
+    _showWelcomeMessage();
+  }
+
+  /// ✅ تحميل أو إنشاء user_id
+  Future<void> _initializeUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? storedId = prefs.getString('user_id');
+
+    if (storedId == null) {
+      storedId = const Uuid().v4();
+      await prefs.setString('user_id', storedId);
+      print("🆕 تم إنشاء user_id جديد: $storedId");
+    } else {
+      print("♻️ تم تحميل user_id الموجود: $storedId");
+    }
+
+    setState(() => userId = storedId);
+  }
+
+  /// 💬 الرسالة الافتتاحية
+  void _showWelcomeMessage() {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        messages.add({
+          'text':
+              '👨‍⚕️ مرحبًا! أنا MediBot الطبيب الذكي 😊\nممكن أعرف بتعاني من إيه عشان نبدأ؟',
+          'isUser': false,
+          'time': DateFormat('HH:mm').format(DateTime.now()),
+        });
+      });
+    });
+  }
+
+  /// 🧠 إرسال الرسالة للسيرفر واستقبال الرد
+  Future<void> sendMessage() async {
     final messageText = _controller.text.trim();
-    if (messageText.isEmpty) return;
+    if (messageText.isEmpty || userId == null) return;
 
     setState(() {
       messages.add({
@@ -63,8 +72,43 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _controller.clear();
 
-    /**  TO DO **/
-    //Chat bot response simulation
+    final url = Uri.parse('http://192.168.1.12:7000/chatbot'); // ⚠️ بدّلي IP حسب جهازك
+
+    try {
+      print("📩 Sending to server => user_id: $userId | message: $messageText");
+
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'user_id': userId, // ✅ إرسال المعرف المحفوظ
+          'message': messageText,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final reply = jsonDecode(response.body)['reply'];
+
+        setState(() {
+          messages.add({
+            'text': reply,
+            'isUser': false,
+            'time': DateFormat('HH:mm').format(DateTime.now()),
+          });
+        });
+      } else {
+        throw Exception('Failed to get AI response');
+      }
+    } catch (e) {
+      print("Error in sendMessage: $e");
+      setState(() {
+        messages.add({
+          'text': '⚠️ حدث خطأ أثناء الاتصال بالسيرفر.',
+          'isUser': false,
+          'time': DateFormat('HH:mm').format(DateTime.now()),
+        });
+      });
+    }
   }
 
   @override
@@ -96,7 +140,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       ),
-
       body: Column(
         children: [
           Expanded(
@@ -110,13 +153,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 6),
                   child: Row(
-                    mainAxisAlignment: isUser
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
+                    mainAxisAlignment:
+                        isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       if (!isUser) ...[
-                        // رسالة البوت
                         Flexible(
                           child: Container(
                             padding: const EdgeInsets.all(12),
@@ -142,7 +183,6 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         ),
                       ] else ...[
-                        // رسالة المستخدم
                         Text(
                           msg['time'],
                           style: TextStyle(
@@ -175,7 +215,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
 
-          // حقل الإدخال
+          // 🟦 إدخال الرسائل
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -190,20 +230,14 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       child: Row(
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.attach_file,
-                              color: Colors.grey,
-                            ),
-                          ),
                           Expanded(
                             child: TextField(
                               controller: _controller,
                               decoration: const InputDecoration(
-                                hintText: "Type a message",
+                                hintText: "اكتب رسالتك...",
                                 border: InputBorder.none,
                               ),
+                              onSubmitted: (_) => sendMessage(),
                             ),
                           ),
                         ],

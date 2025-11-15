@@ -6,6 +6,8 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
   final bool isPassword;
+  final TextInputType keyboardType;
+  final String? errorText; // ✅ optional validation message
 
   const CustomTextField({
     super.key,
@@ -13,6 +15,8 @@ class CustomTextField extends StatelessWidget {
     required this.hint,
     required this.controller,
     this.isPassword = false,
+    this.keyboardType = TextInputType.text, // ✅ default safe type
+    this.errorText, // ✅ optional, shows only if provided
   });
 
   @override
@@ -22,13 +26,15 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         obscureText: isPassword,
+        keyboardType: keyboardType,
         cursorColor: Color(AppColor.primary),
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
+          errorText: errorText, // ✅ shows red error message if any
           labelStyle: const TextStyle(
             color: Color(AppColor.primary),
-            fontSize: 24,
+            fontSize: 16,
           ),
           hintStyle: const TextStyle(
             color: Color(AppColor.textHint),
@@ -46,6 +52,14 @@ class CustomTextField extends StatelessWidget {
               color: Color(AppColor.primary),
               width: 0.8,
             ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.red, width: 1.5),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.red, width: 2),
             borderRadius: BorderRadius.circular(10),
           ),
         ),

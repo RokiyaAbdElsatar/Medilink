@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medilink/core/constant/appcolor.dart';
+import 'package:medilink/models/medication_model.dart';
+import 'package:medilink/services/medication_services.dart';
+import 'package:medilink/views/add_edit_medication_screen.dart';
+import 'package:medilink/views/notification_screen.dart';
 import 'package:medilink/widgets/custom_app_bar.dart';
 import 'package:medilink/widgets/medicine_card.dart';
 
@@ -11,97 +16,162 @@ class MedicationScreen extends StatefulWidget {
 }
 
 class _MedicationScreenState extends State<MedicationScreen> {
+  final _medService = MedicationService();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Medications',
-        subtitle: 'Manage your medications',
-        icon: Icons.notifications_outlined,
-        onPressed: () {},
-        shape: BoxShape.circle,
-      ),
-      backgroundColor: Color(AppColor.textSecondary),
-      body: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.sunny, color: Color(AppColor.primary), size: 32),
-                  const SizedBox(width: 5),
-                  Text(
-                    'Morning',
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Color(AppColor.primary),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              MedicineCard(
-                name: "Metformin",
-                dosage: "500mg",
-                freq: "Once Daily",
-                time: "9:00 AM",
-                onDone: () {},
-                onEdit: () {},
-                onDelete: () {},
-              ),
-              SizedBox(height: 10),
-              Divider(
-                color: Color(AppColor.textHint).withOpacity(0.8),
-                thickness: 0.5,
-                indent: 40,
-                endIndent: 40,
-              ),
-              SizedBox(height: 10),
+    return ScreenUtilInit(
+      designSize: const Size(393, 852),
+      minTextAdapt: true,
+      builder: (context, child) {
+        return Scaffold(
+          appBar: CustomAppBar(
+            backBtn: false,
+            title: 'Medications',
+            subtitle: 'Manage your medications',
+            icon: Icons.notifications_outlined,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NotificationScreen()),
+              );
+            },
+            shape: BoxShape.circle,
+          ),
+          backgroundColor: const Color(AppColor.textSecondary),
+          body: Padding(
+            padding: EdgeInsets.all(18.w),
+            child: StreamBuilder<List<Medication>>(
+              stream: _medService.getUserMedications(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-              Row(
-                children: [
-                  Icon(
-                    Icons.nightlight,
-                    color: Color(AppColor.primary),
-                    size: 32,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    'Night',
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Color(AppColor.primary),
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: const TextStyle(color: Colors.red),
                     ),
+                  );
+                }
+
+                final meds = snapshot.data ?? [];
+
+                if (meds.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'No medications yet.\nTap + to add one!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
+                    ),
+                  );
+                }
+
+                // Separate morning and night meds
+                final morningMeds = meds
+                    .where((m) => m.timeCategory == 'Morning')
+                    .toList();
+                final nightMeds = meds
+                    .where((m) => m.timeCategory == 'Night')
+                    .toList();
+
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Morning Section
+                      if (morningMeds.isNotEmpty) ...[
+                        _buildSectionHeader('Morning', Icons.sunny),
+                        SizedBox(height: 10.h),
+                        ...morningMeds.map(
+                          (med) => MedicineCard(
+                            id: med.id,
+                            name: med.name,
+                            dosage: med.dosage,
+                            freq: med.frequency,
+                            time: med.time,
+                            taken: med.taken ?? false, med: med,
+                          ),
+                        ),
+                        _buildDivider(),
+                        SizedBox(height: 10.h),
+                      ],
+
+                      // Night Section
+                      if (nightMeds.isNotEmpty) ...[
+                        _buildSectionHeader('Night', Icons.nightlight),
+                        SizedBox(height: 10.h),
+                        ...nightMeds.map(
+                          (med) => MedicineCard(
+                            id: med.id,
+                            name: med.name,
+                            dosage: med.dosage,
+                            freq: med.frequency,
+                            time: med.time,
+                            taken: med.taken ?? false, med: med,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(height: 10),
-              MedicineCard(
-                name: "Metformin",
-                dosage: "500mg",
-                freq: "Once Daily",
-                time: "9:00 AM",
-                onDone: () {},
-                onEdit: () {},
-                onDelete: () {},
-              ),
-            ],
+                );
+              },
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            heroTag: 'addMed',
+            shape: const CircleBorder(),
+            backgroundColor: const Color(AppColor.medicationColor),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddEditMedicationScreen(),
+                ),
+              );
+            },
+            child: Icon(
+              Icons.add,
+              size: 30.sp,
+              color: const Color(AppColor.textSecondary),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // Helper: Section header (Morning/Night)
+  Widget _buildSectionHeader(String title, IconData icon) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: const Color(AppColor.primary),
+          size: 32.sp,
+        ),
+        SizedBox(width: 5.w),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 26.sp,
+            fontWeight: FontWeight.bold,
+            color: const Color(AppColor.primary),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: Color(AppColor.medicationColor),
-        onPressed: () {},
-        child: const Icon(
-          Icons.add,
-          size: 32,
-          color: Color(AppColor.textSecondary),
-        ),
-      ),
+      ],
+    );
+  }
+
+  // Helper: Divider between sections
+  Widget _buildDivider() {
+    return Divider(
+      color: const Color(AppColor.textHint).withOpacity(0.8),
+      thickness: 0.5,
+      indent: 40.w,
+      endIndent: 40.w,
     );
   }
 }

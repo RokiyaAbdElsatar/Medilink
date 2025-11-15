@@ -44,6 +44,18 @@ dependencies:
   firebase_core: ^4.2.0
   firebase_auth: ^6.1.1
   cloud_firestore: ^6.0.3
+  http: ^1.5.0
+  shared_preferences: ^2.5.3
+  uuid: ^4.5.2
+  flutter_local_notifications: ^19.5.0
+  timezone: ^0.10.1
+  flutter_native_timezone_latest: ^1.0.0
+  android_intent_plus: ^6.0.0
+  device_info_plus: ^12.2.0
+  carousel_slider: ^5.1.1
+  image_picker: ^1.2.1
+  firebase_storage: ^13.0.4
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +82,6 @@ flutter:
   assets:
     - assets/images/
     - assets/images/curve.png
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

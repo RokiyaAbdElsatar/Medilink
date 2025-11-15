@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:medilink/core/constant/appcolor.dart';
+import 'package:medilink/services/alarm_permission_helper.dart';
 import 'package:medilink/views/onboarding.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -30,6 +31,10 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      requestExactAlarmPermission(context);
+    });
 
     // Shimmer controller (plays once)
     _shimmerController = AnimationController(

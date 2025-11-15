@@ -3,25 +3,31 @@ import 'package:medilink/core/constant/appcolor.dart';
 import 'package:medilink/views/home_screen.dart';
 import 'package:medilink/views/Hospitals.dart';
 import 'package:medilink/views/chat_screen.dart';
-import 'package:medilink/views/Pharmacies.dart'; // or Medicines screen if separate
+import 'package:medilink/views/medication_screen.dart';
 import 'package:medilink/views/profile_screen.dart'; // you'll create this if not yet done
 
 class NavigationScreen extends StatefulWidget {
-  const NavigationScreen({super.key});
+ var index;
+   NavigationScreen({super.key , this.index =0});
 
   @override
   State<NavigationScreen> createState() => _NavigationScreenState();
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
-  int _selectedIndex = 0;
+late int _selectedIndex; // نستخدم late لأننا هنهيئه لاحقًا
 
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.index; 
+  }
   // Screens list — order matches bottom nav
   final List<Widget> _screens = [
     HomeScreen(),
     Hospitals(),
     ChatScreen(),
-    Pharmacies(), // replace with your MedicinesScreen() when ready
+    MedicationScreen(), // replace with your MedicinesScreen() when ready
     ProfileScreen(), // placeholder for now
   ];
 
