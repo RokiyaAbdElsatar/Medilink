@@ -18,6 +18,16 @@ Medilink aims to simplify access to medical services by providing:
 - RESTful **backend APIs** served with FastAPI (Uvicorn)
 - Flutter frontend for Android/iOS
 
+---
+
+## 📱 Preview
+
+
+
+https://github.com/user-attachments/assets/e54a3c7c-5d9c-4772-b2ca-f23b4b1d35f5
+
+
+
 ## 🏥 Admin Booking Management
 
 The Medilink system includes an administrative module that allows hospital staff to:
