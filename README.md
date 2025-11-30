@@ -3,7 +3,7 @@
 **Medilink** is a DEPI final-project that connects patients with healthcare providers through a clean Flutter mobile app and a lightweight Python backend (FastAPI / Uvicorn).  
 
 
-<img width="1700" height="970" alt="MediLink (2)" src="https://github.com/user-attachments/assets/ecce3f7b-a22c-4239-9c2c-7ab5362bc9fd" />
+<img width="1700" height="970" alt="medilink (3)" src="https://github.com/user-attachments/assets/15e4fb67-1d9d-4c7e-8095-f11629f09123" />
 
 
 ---
