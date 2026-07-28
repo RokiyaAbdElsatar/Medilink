@@ -84,7 +84,7 @@ class _DetailsState extends State<Details> {
           ],
         ),
       ),
-    );
+      );
   }
   Widget buildTabButton(String text, int index) {
     final bool isSelected = selectedTab == index;
@@ -251,6 +251,7 @@ Widget buildInfoCard({
       ),
     );
   }
+  
   
 
 }
